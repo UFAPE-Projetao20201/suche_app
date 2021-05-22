@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 const String homeRoute = '/';
 const String loginRoute = '/login';
+const String registerRoute = '/register';
 
 final kHintTextStyle = TextStyle(
   color: Colors.white54,

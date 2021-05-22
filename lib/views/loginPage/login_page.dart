@@ -241,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
+      onTap: () => Navigator.of(context).pushNamed(registerRoute),
       child: RichText(
         text: TextSpan(
           children: [
@@ -284,7 +284,7 @@ class _LoginPageState extends State<LoginPage> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color(0xFF73AEF5),
+                      Color(0xFF2B3647),
                       Color(0xFF61A4F1),
                       Color(0xFF478DE0),
                       Color(0xFF398AE5),
