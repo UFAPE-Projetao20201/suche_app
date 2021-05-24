@@ -237,7 +237,6 @@ class _RegisterPageState extends State<RegisterPage> {
               hintStyle: kHintTextStyle,
             ),
             onTap: () {
-              print('oi');
               showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
