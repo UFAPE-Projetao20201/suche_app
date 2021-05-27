@@ -276,7 +276,7 @@ class _PerfilPageState extends State<PerfilPage> {
                             child: Row(
                               children: [
                                 Icon(
-                                  Icons.transgender,
+                                  Icons.ac_unit,
                                   color: Colors.white,
                                 ),
                                 const SizedBox(
@@ -397,7 +397,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.password,
+                                  Icons.ac_unit,
                                   color: Colors.white,
                                 ),
                                 hintText: 'Digite a senha antiga',
@@ -430,7 +430,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.password,
+                                  Icons.ac_unit_outlined,
                                   color: Colors.white,
                                 ),
                                 hintText: 'Digite a nova senha',
@@ -463,7 +463,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.password,
+                                  Icons.ac_unit,
                                   color: Colors.white,
                                 ),
                                 hintText: 'Repita a nova senha',

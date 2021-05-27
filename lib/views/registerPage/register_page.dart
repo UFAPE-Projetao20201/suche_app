@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/util/constants.dart';
+import 'package:intl/intl.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key key}) : super(key: key);
@@ -34,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
     if (_dateTime != null) {
       setState(() {
-        _idadeSelecionada = new DateFormat.yMd('en_US').format(_dateTime);
+        _idadeSelecionada = DateFormat.yMd('en_US').format(_dateTime);
       });
     }
   }

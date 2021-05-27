@@ -9,12 +9,12 @@ class UserProvider {
   Future createUser({String nome, String sobrenome, String email, String telefone, String genero, String dataNascimento, String password}) async {
     try {
       Map body = {
-        "nome": nome,
-        "sobrenome": sobrenome,
+        "name": nome,
+        "surname": sobrenome,
         "email": email,
-        "telefone": telefone,
-        "genero": genero,
-        "dataNascimento": dataNascimento,
+        "phone": telefone,
+        "gender": genero,
+        "birthDate": dataNascimento,
         "password": password,
       };
 
