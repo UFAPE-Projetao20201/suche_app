@@ -23,6 +23,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('SucheApp'),
+        actions: [
+          IconButton(icon: Icon(Icons.exit_to_app), onPressed: () { Navigator.pushNamedAndRemoveUntil(context, loginRoute, (route) => false); }, ),
+        ],
       ),
       body: Center(
         child: Column(
