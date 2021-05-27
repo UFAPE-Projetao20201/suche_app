@@ -36,8 +36,8 @@ class _HomePageState extends State<HomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pushNamed('hjjkgh'),
-              child: Text('Próxima tela'),
+              onPressed: () => Navigator.of(context).pushNamed(perfilRoute),
+              child: Text('Tela de Perfil'),
             ),
           ],
         ),

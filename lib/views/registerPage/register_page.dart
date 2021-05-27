@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:suche_app/util/constants.dart';
-import 'package:intl/intl.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key key}) : super(key: key);
@@ -17,21 +16,6 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   String _dropdownValueSexo = null;
   DateTime _dateTime;
-  String _idadeSelecionada = 'Selecione sua data de nascimento';
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime _dateTime = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900, 01),
-      lastDate: DateTime.now(),
-    );
-    if (_dateTime != null) {
-      setState(() {
-        _idadeSelecionada = new DateFormat.yMd('en_US').format(_dateTime);
-      });
-    }
-  }
 
   Widget _buildEmailTF() {
     return Column(

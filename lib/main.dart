@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:suche_app/router.dart';
 import 'package:suche_app/util/constants.dart';
-import 'package:suche_app/views/homePage/homePage.dart';
+import 'package:suche_app/views/homePage/home_page.dart';
 import 'package:suche_app/views/loginPage/login_page.dart';
 
 void main() {

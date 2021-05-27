@@ -13,23 +13,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  /*String _email = '';
-  String _senha = '';
-
-  TextEditingController emailController = new TextEditingController();
-
-  Timer updateOnStoppedTyping;
-
-  _atualizarCampoTextFormField(String valorASerAtualziado, TextEditingController textEditingController) {
-    const duration = Duration(milliseconds:800); // set the duration that you want call search() after that.
-    if (updateOnStoppedTyping != null) {
-      setState(() => updateOnStoppedTyping.cancel()); // clear timer
-    }
-    setState(() => updateOnStoppedTyping = new Timer(duration, () {
-      valorASerAtualziado = textEditingController.text;
-    }));
-  }*/
-
   bool _rememberMe = false;
 
   Widget _buildEmailTF() {

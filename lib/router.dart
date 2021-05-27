@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:suche_app/util/constants.dart';
-import 'package:suche_app/views/homePage/homePage.dart';
+import 'package:suche_app/views/homePage/home_page.dart';
 import 'package:suche_app/views/loginPage/login_page.dart';
+import 'package:suche_app/views/perfilPage/perfil_page.dart';
 import 'package:suche_app/views/registerPage/register_page.dart';
 
 class RouteGenerator {
@@ -15,6 +16,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => LoginPage());
       case registerRoute:
         return MaterialPageRoute(builder: (_) => RegisterPage());
+      case perfilRoute:
+        return MaterialPageRoute(builder: (_) => PerfilPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
