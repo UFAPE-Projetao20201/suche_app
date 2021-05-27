@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.suche.suche_app">
    <application
+        android:usesCleartextTraffic="true"
         android:label="suche_app"
         android:icon="@mipmap/ic_launcher">
         <activity
