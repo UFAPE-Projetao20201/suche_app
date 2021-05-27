@@ -32,4 +32,27 @@ class UserProvider {
     }
   }
 
+
+  Future getUser({String email, String password}) async {
+    try {
+      Map body = {
+        "email": email,
+        "password": password,
+      };
+
+      // var data = UserSimplePreferences.getLogin();
+      final httpResponse = await httpClient.request(
+        url: '/auth/authenticate/',
+        method: 'post',
+        body: body,
+      );
+
+      return httpResponse;
+    } catch (error) {
+      print("getUser error - " + error.toString());
+      throw error;
+    }
+  }
+
+
 }
