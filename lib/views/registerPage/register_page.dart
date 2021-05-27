@@ -4,6 +4,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/util/constants.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -16,6 +17,27 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   String _dropdownValueSexo = null;
   DateTime _dateTime;
+  String _idadeSelecionada = 'Selecione sua data de nascimento';
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _nomeController = TextEditingController();
+  TextEditingController _sobrenomeController = TextEditingController();
+  TextEditingController _senhaController = TextEditingController();
+  TextEditingController _confirmarSenhaController = TextEditingController();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime _dateTime = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900, 01),
+      lastDate: DateTime.now(),
+    );
+    if (_dateTime != null) {
+      setState(() {
+        _idadeSelecionada = new DateFormat.yMd('en_US').format(_dateTime);
+      });
+    }
+  }
 
   Widget _buildEmailTF() {
     return Column(
@@ -31,6 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -66,6 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _nomeController,
             keyboardType: TextInputType.name,
             style: TextStyle(
               color: Colors.white,
@@ -101,6 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _sobrenomeController,
             keyboardType: TextInputType.name,
             style: TextStyle(
               color: Colors.white,
@@ -139,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Row(
             children: [
               Icon(
-                Icons.transgender,
+                Icons.ac_unit,
                 color: Colors.white,
               ),
               const SizedBox(
@@ -252,7 +277,9 @@ class _RegisterPageState extends State<RegisterPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _senhaController,
             keyboardType: TextInputType.visiblePassword,
+            obscureText: true,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -261,7 +288,7 @@ class _RegisterPageState extends State<RegisterPage> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.password,
+                Icons.ac_unit,
                 color: Colors.white,
               ),
               hintText: 'Insira a Senha',
@@ -273,12 +300,12 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _buildConfirmaSenhaTF() {
+  Widget _buildTelefoneTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Confirme a Senha',
+          'Telefone',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -287,7 +314,8 @@ class _RegisterPageState extends State<RegisterPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            keyboardType: TextInputType.visiblePassword,
+            controller: _confirmarSenhaController,
+            keyboardType: TextInputType.phone,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -296,10 +324,10 @@ class _RegisterPageState extends State<RegisterPage> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.password,
+                Icons.ac_unit,
                 color: Colors.white,
               ),
-              hintText: 'Confirme a Senha',
+              hintText: 'Insira seu número',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -321,8 +349,14 @@ class _RegisterPageState extends State<RegisterPage> {
             borderRadius: BorderRadius.circular(30.0),
           ),
         ),
-        onPressed: () => print('clicou cadastrar'),
-        //Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false)
+        onPressed: () async {
+          final UserProvider _apiClient = new UserProvider();
+
+          await _apiClient.createUser(nome: _nomeController.text, sobrenome: _sobrenomeController.text, email: _emailController.text, dataNascimento: _dateTime.toString(), genero: _dropdownValueSexo, password: _senhaController.text, telefone: _confirmarSenhaController.text);
+
+          Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false);
+
+        },
         child: Text(
           'CADASTRAR',
           style: TextStyle(
@@ -393,13 +427,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 10.0),
                       _buildSobrenomeTF(),
                       SizedBox(height: 10.0),
+                      _buildTelefoneTF(),
+                      SizedBox(height: 10.0),
                       _buildGeneroTF(),
                       SizedBox(height: 10.0),
                       _buildIdadeTF(),
                       SizedBox(height: 10.0),
                       _buildSenhaTF(),
-                      SizedBox(height: 10.0),
-                      _buildConfirmaSenhaTF(),
                       _buildRegisterBtn(),
                     ],
                   ),
