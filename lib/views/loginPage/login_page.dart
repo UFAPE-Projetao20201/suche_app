@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/util/constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +13,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   bool _rememberMe = false;
 
@@ -29,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -64,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _passwordController,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -141,7 +147,13 @@ class _LoginPageState extends State<LoginPage> {
             borderRadius: BorderRadius.circular(30.0),
           ),
         ),
-        onPressed: () => Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false),
+        onPressed: () async {
+          final UserProvider _apiClient = new UserProvider();
+
+          await _apiClient.getUser(email: _emailController.text, password: _passwordController.text);
+
+          Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false);
+        },
         child: Text(
           'ENTRAR',
           style: TextStyle(
