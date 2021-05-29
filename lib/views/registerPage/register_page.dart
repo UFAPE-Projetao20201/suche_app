@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:mdi/mdi.dart';
 import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:intl/intl.dart';
@@ -110,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(top: 14.0),
                                   prefixIcon: Icon(
-                                    Icons.email,
+                                    Mdi.emailVariant,
                                     color: Colors.white,
                                   ),
                                   hintText: 'Insira o E-mail',
@@ -144,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(top: 14.0),
                                   prefixIcon: Icon(
-                                    Icons.drive_file_rename_outline,
+                                    Mdi.formTextbox,
                                     color: Colors.white,
                                   ),
                                   hintText: 'Insira o Nome',
@@ -178,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(top: 14.0),
                                   prefixIcon: Icon(
-                                    Icons.drive_file_rename_outline,
+                                    Mdi.formTextbox,
                                     color: Colors.white,
                                   ),
                                   hintText: 'Insira o Sobrenome',
@@ -212,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(top: 14.0),
                                   prefixIcon: Icon(
-                                    Icons.ac_unit,
+                                    Mdi.phone,
                                     color: Colors.white,
                                   ),
                                   hintText: 'Insira seu número',
@@ -239,7 +240,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: Row(
                                 children: [
                                   Icon(
-                                    Icons.ac_unit,
+                                    Mdi.genderMaleFemale,
                                     color: Colors.white,
                                   ),
                                   const SizedBox(
@@ -271,7 +272,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         'Masculino',
                                         'Feminino',
                                         'Outros',
-                                        'Prefiro não falar'
+                                        'Prefiro não informar'
                                       ].map<DropdownMenuItem<String>>((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
@@ -308,9 +309,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.only(top: 14.0),
+                                  // contentPadding: EdgeInsets.only(top: 14.0),
                                   prefixIcon: Icon(
-                                    Icons.calendar_today,
+                                    Mdi.calendarStar,
                                     color: Colors.white,
                                   ),
                                   hintText: _dateTime == null
@@ -359,7 +360,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(top: 14.0),
                                   prefixIcon: Icon(
-                                    Icons.ac_unit,
+                                    Mdi.formTextboxPassword,
                                     color: Colors.white,
                                   ),
                                   hintText: 'Insira a Senha',

@@ -4,6 +4,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mdi/mdi.dart';
 import 'package:suche_app/util/constants.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -183,7 +184,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.email,
+                                  Mdi.emailVariant,
                                   color: Colors.white,
                                 ),
                                 hintText: _emailUser,
@@ -216,7 +217,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.drive_file_rename_outline,
+                                  Mdi.formTextbox,
                                   color: Colors.white,
                                 ),
                                 hintText: _nameUser,
@@ -249,7 +250,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.drive_file_rename_outline,
+                                  Mdi.formTextbox,
                                   color: Colors.white,
                                 ),
                                 hintText: _surnameUser,
@@ -276,7 +277,7 @@ class _PerfilPageState extends State<PerfilPage> {
                             child: Row(
                               children: [
                                 Icon(
-                                  Icons.ac_unit,
+                                  Mdi.genderMaleFemale,
                                   color: Colors.white,
                                 ),
                                 const SizedBox(
@@ -350,7 +351,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.calendar_today,
+                                  Mdi.calendarStar,
                                   color: Colors.white,
                                 ),
                                 hintText: _birthUser == null
@@ -397,7 +398,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.ac_unit,
+                                  Mdi.formTextboxPassword,
                                   color: Colors.white,
                                 ),
                                 hintText: 'Digite a senha antiga',
@@ -430,7 +431,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.ac_unit_outlined,
+                                  Mdi.formTextboxPassword,
                                   color: Colors.white,
                                 ),
                                 hintText: 'Digite a nova senha',
@@ -463,7 +464,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
-                                  Icons.ac_unit,
+                                  Mdi.formTextboxPassword,
                                   color: Colors.white,
                                 ),
                                 hintText: 'Repita a nova senha',

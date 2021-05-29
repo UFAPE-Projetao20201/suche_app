@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mdi/mdi.dart';
 import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/util/constants.dart';
 
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.only(top: 14.0),
                               prefixIcon: Icon(
-                                Icons.email,
+                                Mdi.emailVariant,
                                 color: Colors.white,
                               ),
                               hintText: 'Insira o seu E-mail',
@@ -129,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(top: 14.0),
                                   prefixIcon: Icon(
-                                    Icons.lock,
+                                    Mdi.formTextboxPassword,
                                     color: Colors.white,
                                   ),
                                   hintText: 'Insira a sua senha',
