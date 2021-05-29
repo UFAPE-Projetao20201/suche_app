@@ -189,11 +189,19 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             onPressed: () async {
-                              final UserProvider _apiClient = new UserProvider();
+                              try {
+                                final UserProvider _apiClient = new UserProvider();
 
-                              await _apiClient.getUser(email: _emailController.text, password: _passwordController.text);
+                                await _apiClient.getUser(email: _emailController.text, password: _passwordController.text);
 
-                              Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false);
+                                Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false);
+                              } catch (erro) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Login inválido'),
+                                  ),
+                                );
+                              }
                             },
                             child: Text(
                               'ENTRAR',

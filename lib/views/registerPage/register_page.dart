@@ -22,13 +22,10 @@ class _RegisterPageState extends State<RegisterPage> {
   DateTime? _dateTime;
 
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _sobrenomeController = TextEditingController();
-  TextEditingController _senhaController = TextEditingController();
-  TextEditingController _confirmarSenhaController = TextEditingController();
-
-  var _emailMaskFormatter = new MaskTextInputFormatter(mask: '####@#.#', filter: { "#": RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+") });
-
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _surnameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -137,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: kBoxDecorationStyle,
                               height: 60.0,
                               child: TextField(
-                                controller: _nomeController,
+                                controller: _nameController,
                                 keyboardType: TextInputType.name,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -171,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: kBoxDecorationStyle,
                               height: 60.0,
                               child: TextField(
-                                controller: _sobrenomeController,
+                                controller: _surnameController,
                                 keyboardType: TextInputType.name,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -205,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: kBoxDecorationStyle,
                               height: 60.0,
                               child: TextField(
-                                controller: _confirmarSenhaController,
+                                controller: _phoneController,
                                 keyboardType: TextInputType.phone,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -351,7 +348,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: kBoxDecorationStyle,
                               height: 60.0,
                               child: TextField(
-                                controller: _senhaController,
+                                controller: _passwordController,
                                 keyboardType: TextInputType.visiblePassword,
                                 obscureText: true,
                                 style: TextStyle(
@@ -385,12 +382,29 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                             onPressed: () async {
-                              // if (_formKey.currentState!.validate()) {
+                              if (_formKey.currentState!.validate()) {
                                 // If the form is valid, display a snackbar. In the real world,
                                 // you'd often call a server or save the information in a database.
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(content: Text('Processing Data')));
-                              // }
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Processando dados'),
+                                  ),
+                                );
+
+                                final UserProvider _apiClient = new UserProvider();
+
+                                await _apiClient.createUser(
+                                  name: _nameController.text,
+                                  surname: _surnameController.text,
+                                  email: _emailController.text,
+                                  birthDate: _dateTime!.toString(),
+                                  gender: _dropdownValueSexo!,
+                                  password: _passwordController.text,
+                                  phone: _phoneController.text,
+                                );
+
+                                Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false);
+                              }
                               // final UserProvider _apiClient = new UserProvider();
                               //
                               // await _apiClient.createUser(nome: _nomeController.text, sobrenome: _sobrenomeController.text, email: _emailController.text, dataNascimento: _dateTime.toString(), genero: _dropdownValueSexo, password: _senhaController.text, telefone: _confirmarSenhaController.text);
