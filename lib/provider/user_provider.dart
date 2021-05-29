@@ -6,20 +6,19 @@ class UserProvider {
 
   HttpClient httpClient = HttpAdapter(Client());
 
-  Future createUser({String nome, String sobrenome, String email, String telefone, String genero, String dataNascimento, String password}) async {
+  Future createUser({required String name, required String surname, required String email, required String phone, required String gender, required String birthDate, required String password}) async {
     try {
       Map body = {
-        "name": nome,
-        "surname": sobrenome,
+        "name": name,
+        "surname": surname,
         "email": email,
-        "phone": telefone,
-        "gender": genero,
-        "birthDate": dataNascimento,
+        "phone": phone,
+        "gender": gender,
+        "birthDate": birthDate,
         "password": password,
       };
 
-      // var data = UserSimplePreferences.getLogin();
-      final httpResponse = await httpClient.request(
+      late final httpResponse = httpClient.request(
         url: '/auth/register/',
         method: 'post',
         body: body,
@@ -33,14 +32,13 @@ class UserProvider {
   }
 
 
-  Future getUser({String email, String password}) async {
+  Future getUser({String? email, String? password}) async {
     try {
       Map body = {
         "email": email,
         "password": password,
       };
 
-      // var data = UserSimplePreferences.getLogin();
       final httpResponse = await httpClient.request(
         url: '/auth/authenticate/',
         method: 'post',

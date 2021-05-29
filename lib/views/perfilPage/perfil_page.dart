@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:suche_app/util/constants.dart';
 
 class PerfilPage extends StatefulWidget {
-  const PerfilPage({Key key}) : super(key: key);
+  const PerfilPage({Key? key}) : super(key: key);
 
   @override
   _PerfilPageState createState() => _PerfilPageState();
@@ -17,8 +17,8 @@ class _PerfilPageState extends State<PerfilPage> {
   String _emailUser = "edsgerdijkstra@gmail.com";
   String _nameUser = "Edsger";
   String _surnameUser = "Dijkstra";
-  String _sexoUser = "Masculino";
-  DateTime _birthUser = DateTime.now();
+  String? _sexoUser = "Masculino";
+  DateTime? _birthUser = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +301,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                         : Text('Selecione o sexo',
                                             style: kHintTextStyle,
                                             textScaleFactor: 1.2),
-                                    onChanged: (String newValue) {
+                                    onChanged: (String? newValue) {
                                       setState(() {
                                         _sexoUser = newValue;
                                       });
@@ -355,7 +355,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 ),
                                 hintText: _birthUser == null
                                     ? 'Insira a data de nascimento'
-                                    : UtilData.obterDataDDMMAAAA(_birthUser),
+                                    : UtilData.obterDataDDMMAAAA(_birthUser!),
                                 hintStyle: kHintTextStyle,
                               ),
                               onTap: () {
