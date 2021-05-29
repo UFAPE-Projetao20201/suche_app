@@ -405,12 +405,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                                 Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false);
                               }
-                              // final UserProvider _apiClient = new UserProvider();
-                              //
-                              // await _apiClient.createUser(nome: _nomeController.text, sobrenome: _sobrenomeController.text, email: _emailController.text, dataNascimento: _dateTime.toString(), genero: _dropdownValueSexo, password: _senhaController.text, telefone: _confirmarSenhaController.text);
-                              //
-                              // Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false);
-
                             },
                             child: Text(
                               'CADASTRAR',
