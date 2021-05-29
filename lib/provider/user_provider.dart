@@ -6,7 +6,7 @@ class UserProvider {
 
   HttpClient httpClient = HttpAdapter(Client());
 
-  Future createUser({String nome, String sobrenome, String email, String telefone, String genero, String dataNascimento, String password}) async {
+  Future createUser({String? nome, String? sobrenome, String? email, String? telefone, String? genero, String? dataNascimento, String? password}) async {
     try {
       Map body = {
         "name": nome,
@@ -33,7 +33,7 @@ class UserProvider {
   }
 
 
-  Future getUser({String email, String password}) async {
+  Future getUser({String? email, String? password}) async {
     try {
       Map body = {
         "email": email,

@@ -6,19 +6,20 @@ import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/util/constants.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
-  bool _rememberMe = false;
+  bool? _rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
@@ -70,38 +71,38 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 30.0),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'E-mail',
-                              style: kLabelStyle,
-                            ),
-                            SizedBox(height: 10.0),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              decoration: kBoxDecorationStyle,
-                              height: 60.0,
-                              child: TextField(
-                                controller: _emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'OpenSans',
-                                ),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.only(top: 14.0),
-                                  prefixIcon: Icon(
-                                    Icons.email,
-                                    color: Colors.white,
-                                  ),
-                                  hintText: 'Insira o seu E-mail',
-                                  hintStyle: kHintTextStyle,
-                                ),
-                              ),
-                            ),
-                          ],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'E-mail',
+                          style: kLabelStyle,
                         ),
+                        SizedBox(height: 10.0),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          decoration: kBoxDecorationStyle,
+                          height: 60.0,
+                          child: TextField(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(top: 14.0),
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Colors.white,
+                              ),
+                              hintText: 'Insira o seu E-mail',
+                              hintStyle: kHintTextStyle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                         SizedBox(
                           height: 30.0,
                         ),
@@ -141,8 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                         Container(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed: () =>
-                                print('Forgot Password Button Pressed'),
+                            onPressed: () => print('Forgot Password Button Pressed'),
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.only(right: 0.0),
                             ),
@@ -157,8 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Row(
                             children: <Widget>[
                               Theme(
-                                data: ThemeData(
-                                    unselectedWidgetColor: Colors.white),
+                                data: ThemeData(unselectedWidgetColor: Colors.white),
                                 child: Checkbox(
                                   value: _rememberMe,
                                   checkColor: Colors.green,
@@ -190,15 +189,11 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             onPressed: () async {
-                              final UserProvider _apiClient =
-                                  new UserProvider();
+                              final UserProvider _apiClient = new UserProvider();
 
-                              await _apiClient.getUser(
-                                  email: _emailController.text,
-                                  password: _passwordController.text);
+                              await _apiClient.getUser(email: _emailController.text, password: _passwordController.text);
 
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, homeRoute, (route) => false);
+                              Navigator.pushNamedAndRemoveUntil(context, homeRoute, (route) => false);
                             },
                             child: Text(
                               'ENTRAR',
@@ -214,12 +209,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         // _buildSignInWithText(),
                         // _buildSocialBtnRow(),
-                        SizedBox(
-                          height: 16,
-                        ),
+                        SizedBox(height: 16,),
                         GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).pushNamed(registerRoute),
+                          onTap: () => Navigator.of(context).pushNamed(registerRoute),
                           child: RichText(
                             text: TextSpan(
                               children: [
@@ -255,3 +247,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
