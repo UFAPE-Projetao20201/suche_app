@@ -16,6 +16,7 @@ dependencies:
   brasil_fields:
   http:
   mask_text_input_formatter:
+  mdi: ^5.0.0-nullsafety.0
   validators:
 
 dev_dependencies:
