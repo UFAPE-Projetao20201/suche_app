@@ -23,8 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   bool? _rememberMe = false;
-
   bool _absorbing = false;
+  bool _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,20 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             Mdi.formTextboxPassword,
                             'Insira a sua senha',
-                            obscureText: true,
+                            obscureText: !_passwordVisible,
+                            suffixIconButton: IconButton(
+                              icon: Icon(
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                            ),
                           ),
                           Container(
                             alignment: Alignment.centerRight,

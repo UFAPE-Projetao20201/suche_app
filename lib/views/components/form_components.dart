@@ -4,7 +4,7 @@ import 'package:suche_app/util/constants.dart';
 
 class FormComponents {
 
-  static Column buildCustomTextForm(String _title, TextEditingController _emailController, TextInputType _textInputType, String? Function(String?) _validator, IconData _icon, String _hintText, {bool? obscureText}) {
+  static Column buildCustomTextForm(String _title, TextEditingController _emailController, TextInputType _textInputType, String? Function(String?) _validator, IconData _icon, String _hintText, {bool? obscureText, IconButton? suffixIconButton}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -34,6 +34,7 @@ class FormComponents {
                 _icon,
                 color: Colors.white,
               ),
+              suffixIcon: suffixIconButton != null ? suffixIconButton : null,
               prefixIconConstraints: BoxConstraints(minWidth: 0,),
               prefixText: "   ", // espaçador
               hintText: _hintText,
