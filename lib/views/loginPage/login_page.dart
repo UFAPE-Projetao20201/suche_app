@@ -151,11 +151,10 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   try {
+                                    // Desabilita a tela para não receber toques
                                     setState(() {
                                       _absorbing = true;
                                     });
-
-                                    print('ENTRAR');
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
@@ -171,9 +170,13 @@ class _LoginPageState extends State<LoginPage> {
                                       password: _passwordController.text,
                                     );
 
+                                    // Re-habilita a tela para receber toques
                                     setState(() {
                                       _absorbing = false;
                                     });
+
+                                    ScaffoldMessenger.of(context)
+                                        .clearSnackBars();
 
                                     Navigator.pushNamedAndRemoveUntil(
                                       context,
@@ -181,6 +184,8 @@ class _LoginPageState extends State<LoginPage> {
                                       (route) => false,
                                     );
                                   } catch (erro) {
+
+                                    // Re-habilita a tela para receber toques
                                     setState(() {
                                       _absorbing = false;
                                     });
@@ -194,7 +199,15 @@ class _LoginPageState extends State<LoginPage> {
                                           backgroundColor: Colors.red,
                                         ),
                                       );
-                                    } else if (erro == HttpError.notFound) {
+                                    } else if (erro == HttpError.badRequest) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text('E-mail ou senha inválidos!'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    } else {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
