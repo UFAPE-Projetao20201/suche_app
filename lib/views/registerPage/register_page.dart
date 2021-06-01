@@ -1,14 +1,11 @@
-import 'dart:async';
-
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mdi/mdi.dart';
 import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/util/constants.dart';
-import 'package:intl/intl.dart';
+import 'package:suche_app/views/components/page_components.dart';
 import 'package:validators/validators.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -39,23 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Stack(
             children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF2B3647),
-                      Color(0xFF61A4F1),
-                      Color(0xFF478DE0),
-                      Color(0xFF398AE5),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
-                  ),
-                ),
-              ),
+              PageComponents.buildBackgroundContainer(),
               Container(
                 height: double.infinity,
                 width: double.infinity,
@@ -384,8 +365,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // If the form is valid, display a snackbar. In the real world,
-                                // you'd often call a server or save the information in a database.
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text('Processando dados'),

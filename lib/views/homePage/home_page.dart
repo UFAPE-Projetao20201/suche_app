@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:suche_app/util/constants.dart';
-import 'package:suche_app/views/loginPage/login_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
