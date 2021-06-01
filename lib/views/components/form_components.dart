@@ -14,7 +14,6 @@ class FormComponents {
         ),
         const SizedBox(height: 10.0),
         Container(
-          // alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 70.0,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
