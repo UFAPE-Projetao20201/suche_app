@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:suche_app/router.dart';
 import 'package:suche_app/util/constants.dart';
-import 'package:suche_app/views/homePage/home_page.dart';
-import 'package:suche_app/views/loginPage/login_page.dart';
+import 'package:suche_app/util/custom_colors.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: CustomColors().createMaterialColor(CustomColors.colorOrangePrimary),
       ),
       initialRoute: loginRoute,
       onGenerateRoute: RouteGenerator.generateRoute,

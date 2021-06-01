@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:suche_app/util/custom_colors.dart';
 
-/// This file contains all the routing constants used within the app
-
+// Constantes de rotas usadas no app
 const String homeRoute = '/';
 const String loginRoute = '/login';
 const String registerRoute = '/register';
@@ -12,6 +12,11 @@ final kHintTextStyle = TextStyle(
   fontFamily: 'OpenSans',
 );
 
+final kErrorTextStyle = TextStyle(
+  fontFamily: 'OpenSans',
+  fontWeight: FontWeight.bold,
+);
+
 final kLabelStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
@@ -19,7 +24,7 @@ final kLabelStyle = TextStyle(
 );
 
 final kBoxDecorationStyle = BoxDecoration(
-  color: Color(0xFF2B387D),
+  color: CustomColors.colorOrangePrimary,
   borderRadius: BorderRadius.circular(10.0),
   boxShadow: [
     BoxShadow(
@@ -28,4 +33,18 @@ final kBoxDecorationStyle = BoxDecoration(
       offset: Offset(0, 2),
     ),
   ],
+);
+
+final kBoxDecorationBackgroundStyle = BoxDecoration(
+  gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      CustomColors.orangePrimary.shade200,
+      CustomColors.orangePrimary.shade300,
+      CustomColors.orangePrimary.shade400,
+      CustomColors.orangePrimary.shade700,
+    ],
+    stops: [0.1, 0.4, 0.7, 0.9],
+  ),
 );

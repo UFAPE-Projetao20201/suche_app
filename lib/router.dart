@@ -7,7 +7,7 @@ import 'package:suche_app/views/registerPage/register_page.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
+    final args = settings.arguments; // ignore: unused_local_variable
 
     switch (settings.name) {
       case homeRoute:
