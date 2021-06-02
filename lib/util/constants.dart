@@ -8,7 +8,7 @@ const String registerRoute = '/register';
 const String perfilRoute = '/perfil';
 
 final kHintTextStyle = TextStyle(
-  color: Colors.white54,
+  color: Colors.white,
   fontFamily: 'OpenSans',
 );
 
@@ -24,7 +24,7 @@ final kLabelStyle = TextStyle(
 );
 
 final kBoxDecorationStyle = BoxDecoration(
-  color: CustomColors.colorOrangePrimary,
+  color: CustomColors.orangePrimary.shade50,
   borderRadius: BorderRadius.circular(10.0),
   boxShadow: [
     BoxShadow(
@@ -33,18 +33,4 @@ final kBoxDecorationStyle = BoxDecoration(
       offset: Offset(0, 2),
     ),
   ],
-);
-
-final kBoxDecorationBackgroundStyle = BoxDecoration(
-  gradient: LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: [
-      CustomColors.orangePrimary.shade200,
-      CustomColors.orangePrimary.shade300,
-      CustomColors.orangePrimary.shade400,
-      CustomColors.orangePrimary.shade700,
-    ],
-    stops: [0.1, 0.4, 0.7, 0.9],
-  ),
 );
