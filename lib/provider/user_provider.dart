@@ -24,8 +24,6 @@ class UserProvider {
         body: body,
       );
 
-      print(await httpResponse);
-
       return httpResponse;
     } catch (error) {
       print("createUser error - " + error.toString());
