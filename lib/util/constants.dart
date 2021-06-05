@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:suche_app/util/custom_colors.dart';
 
-/// This file contains all the routing constants used within the app
-
+// Constantes de rotas usadas no app
 const String homeRoute = '/';
 const String loginRoute = '/login';
-const String registerRoute = '/register';
+const String registerUserRoute = '/registerUser';
 const String perfilRoute = '/perfil';
+const registerPromoterRoute = '/registerPromoter';
+const registerEventRoute = 'registerEvent';
 
 final kHintTextStyle = TextStyle(
-  color: Colors.white54,
+  color: Colors.white,
   fontFamily: 'OpenSans',
+);
+
+final kErrorTextStyle = TextStyle(
+  fontFamily: 'OpenSans',
+  fontWeight: FontWeight.bold,
 );
 
 final kLabelStyle = TextStyle(
@@ -19,7 +26,7 @@ final kLabelStyle = TextStyle(
 );
 
 final kBoxDecorationStyle = BoxDecoration(
-  color: Color(0xFF2B387D),
+  color: CustomColors.orangePrimary.shade50,
   borderRadius: BorderRadius.circular(10.0),
   boxShadow: [
     BoxShadow(

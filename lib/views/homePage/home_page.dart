@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:suche_app/util/constants.dart';
-import 'package:suche_app/views/loginPage/login_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -41,6 +40,10 @@ class _HomePageState extends State<HomePage> {
             TextButton(
               onPressed: () => Navigator.of(context).pushNamed(perfilRoute),
               child: Text('Tela de Perfil'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pushNamed(registerEventRoute),
+              child: Text('Cadastrar Evento'),
             ),
           ],
         ),
