@@ -297,6 +297,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                                   ),
                                   onPressed: () async {
+                                    // Minimiza o teclado
+                                    FocusScope.of(context).unfocus();
+
                                     if (_formKey.currentState!.validate()) {
                                       try {
                                         // Desabilita a tela para não receber toques

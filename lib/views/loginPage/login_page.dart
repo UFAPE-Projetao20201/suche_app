@@ -39,8 +39,9 @@ class _LoginPageState extends State<LoginPage> {
               key: _formKey,
               child: Stack(
                 children: <Widget>[
-                  PageComponents.buildBackgroundContainer(),
+                  // PageComponents.buildBackgroundContainer(),
                   Container(
+                    color: CustomColors.orangePrimary,
                     height: double.infinity,
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
@@ -99,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                                 _passwordVisible
                                     ? Icons.visibility
                                     : Icons.visibility_off,
-                                color: Theme.of(context).primaryColorLight,
+                                color: CustomColors.orangePrimary.shade300,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -162,6 +163,9 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               onPressed: () async {
+                                // Minimiza o teclado
+                                FocusScope.of(context).unfocus();
+
                                 if (_formKey.currentState!.validate()) {
                                   try {
                                     // Desabilita a tela para não receber toques

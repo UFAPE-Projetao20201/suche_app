@@ -7,6 +7,7 @@ const String loginRoute = '/login';
 const String registerRoute = '/register';
 const String perfilRoute = '/perfil';
 
+// Constantes para estilização
 final kHintTextStyle = TextStyle(
   color: Colors.white,
   fontFamily: 'OpenSans',
