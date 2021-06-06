@@ -107,7 +107,7 @@ class _PerfilPageState extends State<PerfilPage> {
                         height: 5,
                       ),
                       ElevatedButton(
-                        onPressed: () => print('clicou tornar-se promotor'),
+                        onPressed: () => Navigator.of(context).pushNamed(registerPromoterRoute),//print('clicou tornar-se promotor'),
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.transparent),

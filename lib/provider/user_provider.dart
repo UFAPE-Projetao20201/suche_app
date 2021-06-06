@@ -52,5 +52,25 @@ class UserProvider {
     }
   }
 
+  Future setPromoterUser({String? email, String? cpfCnpj}) async {
+    try {
+      Map body = {
+        "email": email,
+        "CPF_CNPJ": cpfCnpj,
+      };
+
+      final httpResponse = await httpClient.request(
+        url: '/auth/promote/',
+        method: 'post',
+        body: body,
+      );
+
+      return httpResponse;
+    } catch (error) {
+      print("setPromoterUser error - " + error.toString());
+      throw error;
+    }
+  }
+
 
 }

@@ -4,8 +4,10 @@ import 'package:suche_app/util/custom_colors.dart';
 // Constantes de rotas usadas no app
 const String homeRoute = '/';
 const String loginRoute = '/login';
-const String registerRoute = '/register';
+const String registerUserRoute = '/registerUser';
 const String perfilRoute = '/perfil';
+const registerPromoterRoute = '/registerPromoter';
+const registerEventRoute = 'registerEvent';
 
 // Constantes para estilização
 final kHintTextStyle = TextStyle(

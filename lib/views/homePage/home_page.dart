@@ -41,6 +41,10 @@ class _HomePageState extends State<HomePage> {
               onPressed: () => Navigator.of(context).pushNamed(perfilRoute),
               child: Text('Tela de Perfil'),
             ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pushNamed(registerEventRoute),
+              child: Text('Cadastrar Evento'),
+            ),
           ],
         ),
       ),

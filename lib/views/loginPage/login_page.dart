@@ -281,6 +281,95 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ],
                       ),
+                                    ScaffoldMessenger.of(context)
+                                        .clearSnackBars();
+
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      homeRoute,
+                                      (route) => false,
+                                    );
+                                  } catch (erro) {
+
+                                    // Re-habilita a tela para receber toques
+                                    setState(() {
+                                      _absorbing = false;
+                                    });
+
+                                    if (erro == HttpError.notFound) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content:
+                                              Text('Usuário não encontrado!'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    } else if (erro == HttpError.badRequest) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text('E-mail ou senha inválidos!'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text('Erro no login!'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
+                                  }
+                                }
+                              },
+                              child: Text(
+                                'ENTRAR',
+                                style: TextStyle(
+                                  color: CustomColors.orangePrimary,
+                                  letterSpacing: 1.5,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'OpenSans',
+                                ),
+                              ),
+                            ),
+                          ),
+                          // _buildSignInWithText(),
+                          // _buildSocialBtnRow(),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          GestureDetector(
+                            onTap: () =>
+                                Navigator.of(context).pushNamed(registerUserRoute),
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Não tem uma conta? ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: 'Cadastre-se',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
