@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:suche_app/model/user.dart';
 
 import '../http/index.dart';
 
@@ -44,6 +45,12 @@ class UserProvider {
         method: 'post',
         body: body,
       );
+
+      print(httpResponse);
+
+      late User user = User.fromJson(httpResponse);
+
+      print(user);
 
       return httpResponse;
     } catch (error) {

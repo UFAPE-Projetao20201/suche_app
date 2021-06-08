@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/views/homePage/home_page.dart';
 import 'package:suche_app/views/loginPage/login_page.dart';
-import 'package:suche_app/views/perfilPage/perfil_page.dart';
-import 'package:suche_app/views/registerPage/register_event_page.dart';
-import 'package:suche_app/views/registerPage/register_promoter_page.dart';
-import 'package:suche_app/views/registerPage/register_user_page.dart';
+import 'package:suche_app/views/profilePage/profile_page.dart';
+import 'package:suche_app/views/eventsPage/register_event_page.dart';
+import 'package:suche_app/views/profilePage/register_promoter_page.dart';
+import 'package:suche_app/views/registerUserPage/register_user_page.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
