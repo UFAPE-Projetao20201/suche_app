@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:suche_app/model/user.dart';
 
 import '../http/index.dart';
 
