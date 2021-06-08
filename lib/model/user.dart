@@ -7,6 +7,7 @@ class User {
   final String phone;
   final String gender;
   final DateTime birthDate;
+  final String token;
 
   User({required this.isPromoter,
     required this.id,
@@ -15,7 +16,9 @@ class User {
     required this.email,
     required this.phone,
     required this.gender,
-    required this.birthDate,});
+    required this.birthDate,
+    required this.token,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -27,11 +30,26 @@ class User {
       phone: json['user']['phone'] as String,
       gender: json['user']['gender'] as String,
       birthDate: DateTime.parse(json['user']['birthDate']),
+      token: json['user']['birthDate'] as String,
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    'user': {
+      "isPromoter": isPromoter.toString(),
+      "_id": id,
+      "name": name,
+      "surname": surname,
+      "email": email,
+      "phone": phone,
+      "gender": gender,
+      "birthDate": birthDate.toIso8601String(),
+    },
+    'token': token,
+  };
+
   @override
   String toString() {
-    return 'User{isPromoter: $isPromoter, id: $id, name: $name, surname: $surname, email: $email, phone: $phone, gender: $gender, birthDate: $birthDate}';
+    return 'User{isPromoter: $isPromoter, id: $id, name: $name, surname: $surname, email: $email, phone: $phone, gender: $gender, birthDate: $birthDate, token: $token}';
   }
 }

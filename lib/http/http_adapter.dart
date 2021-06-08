@@ -13,6 +13,8 @@ class HttpAdapter implements HttpClient {
 
   Future<dynamic> request({String? url, String? method, File? image, Map? body, Map? headers, var queryParams}) async {
     final defaultHeaders = headers?.cast<String, String>() ?? {}..addAll({'content-type': 'application/json', 'accept': 'application/json'});
+
+    print(defaultHeaders);
     final jsonBody = body != null ? jsonEncode(body) : null;
     var response = Response('', 500);
     Uri uri = new Uri.http(AppConfiguration.apiBaseUrl, url!, queryParams);

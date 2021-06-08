@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:http/http.dart';
 import 'package:suche_app/model/user.dart';
+import 'package:suche_app/services/storage.dart';
 
 import '../http/index.dart';
 
@@ -45,6 +48,18 @@ class UserProvider {
         method: 'post',
         body: body,
       );
+
+      // Transformando os dados em um User e codificando para Json personalizado
+      User user = User.fromJson(httpResponse);
+      String userJson = jsonEncode(user);
+
+      //Guardando o usuário de forma segura localmente
+      final SecureStorage secureStorage = SecureStorage();
+      await secureStorage.writeSecureData('user', userJson);
+
+      //Lendo o usuário de forma segura localmente
+      String? value = await secureStorage.readSecureData('user');
+      print(value);
 
       return httpResponse;
     } catch (error) {

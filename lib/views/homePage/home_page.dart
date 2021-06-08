@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,7 +24,20 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('SucheApp'),
         actions: [
-          IconButton(icon: Icon(Icons.exit_to_app), onPressed: () { Navigator.pushNamedAndRemoveUntil(context, loginRoute, (route) => false); }, ),
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () async {
+
+              final SecureStorage secureStorage = SecureStorage();
+              await secureStorage.deleteSecureData('user');
+
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                loginRoute,
+                (route) => false,
+              );
+            },
+          ),
         ],
       ),
       body: Center(

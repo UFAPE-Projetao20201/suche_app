@@ -1,14 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:suche_app/router.dart';
+import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Inicialização do secure storage
+  final SecureStorage secureStorage = SecureStorage();
+  String user = '';
+
+  // Obtem os dados do usuário para a primeira tela verificar o login
+  secureStorage
+      .readSecureData('user')
+      .then((value) => value != null ? user = value : user = '')
+      .whenComplete(() {
+    runApp(
+      MyApp(
+        user: user,
+      ),
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {
+  final String user;
+
+  const MyApp({
+    required this.user,
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,9 +45,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: CustomColors().createMaterialColor(CustomColors.colorOrangePrimary),
+        primarySwatch:
+            CustomColors().createMaterialColor(CustomColors.colorOrangePrimary),
       ),
-      initialRoute: loginRoute,
+      //Se o usuário estiver logado é redirecionado para home, senão, para o login
+      initialRoute: user.isNotEmpty ? homeRoute : loginRoute,
       onGenerateRoute: RouteGenerator.generateRoute,
 
       // home: LoginPage(),
