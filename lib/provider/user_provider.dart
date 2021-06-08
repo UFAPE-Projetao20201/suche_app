@@ -46,12 +46,6 @@ class UserProvider {
         body: body,
       );
 
-      print(httpResponse);
-
-      late User user = User.fromJson(httpResponse);
-
-      print(user);
-
       return httpResponse;
     } catch (error) {
       print("getUser error - " + error.toString());
