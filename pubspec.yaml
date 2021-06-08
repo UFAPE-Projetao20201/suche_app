@@ -14,8 +14,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  cupertino_icons:
+  bottom_navy_bar:
   brasil_fields:
+  cupertino_icons:
   flutter_secure_storage: ^4.2.0
   http:
   mask_text_input_formatter:
