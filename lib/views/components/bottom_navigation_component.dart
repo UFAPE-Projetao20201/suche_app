@@ -1,5 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:mdi/mdi.dart';
 import 'package:suche_app/util/custom_colors.dart';
 
 class BottomNavigationComponent {
@@ -10,23 +11,23 @@ class BottomNavigationComponent {
       onItemSelected: _functionOnItemSelected,
       items: [
         BottomNavyBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(Mdi.compass),
           title: Text('Home'),
           activeColor: CustomColors.orangePrimary,
         ),
         BottomNavyBarItem(
-            icon: Icon(Icons.people),
-            title: Text('Users'),
+            icon: Icon(Mdi.trendingUp),
+            title: Text('Em alta'),
             activeColor: CustomColors.orangePrimary,
         ),
         BottomNavyBarItem(
-            icon: Icon(Icons.message),
-            title: Text('Messages'),
+            icon: Icon(Mdi.partyPopper),
+            title: Text('Eventos'),
             activeColor: CustomColors.orangePrimary,
         ),
         BottomNavyBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('Settings'),
+            icon: Icon(Mdi.account),
+            title: Text('Perfil'),
             activeColor: CustomColors.orangePrimary,
         ),
       ],

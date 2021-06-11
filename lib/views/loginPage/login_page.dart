@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mdi/mdi.dart';
 import 'package:suche_app/http/http_error.dart';
+import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/user_provider.dart';
+import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/components/form_components.dart';
@@ -183,10 +187,15 @@ class _LoginPageState extends State<LoginPage> {
                                       final UserProvider _apiClient =
                                           new UserProvider();
 
-                                      await _apiClient.getUser(
+                                      await _apiClient.userLogin(
                                         email: _emailController.text,
                                         password: _passwordController.text,
                                       );
+
+                                      // Inicialização do secure storage
+                                      final SecureStorage secureStorage = SecureStorage();
+                                      String userJson = await secureStorage.readSecureData('user');
+                                      User user = User.fromJson(jsonDecode(userJson));
 
                                       // Re-habilita a tela para receber toques
                                       setState(() {
@@ -200,6 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                                         context,
                                         homeRoute,
                                         (route) => false,
+                                        arguments: user,
                                       );
                                     } catch (erro) {
 
@@ -226,10 +236,11 @@ class _LoginPageState extends State<LoginPage> {
                                           ),
                                         );
                                       } else {
+                                        print(erro);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                            content: Text('Erro no login!'),
+                                            content: Text('Ocorreu um erro, tente novamente!'),
                                             backgroundColor: Colors.red,
                                           ),
                                         );

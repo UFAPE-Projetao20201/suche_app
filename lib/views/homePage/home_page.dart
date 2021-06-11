@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mdi/mdi.dart';
+import 'package:suche_app/model/user.dart';
 import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/views/components/bottom_navigation_component.dart';
 import 'package:suche_app/views/profilePage/profile_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  final User user;
+  HomePage({required this.user, Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -77,7 +78,7 @@ class _HomePageState extends State<HomePage> {
             ),),
             Container(color: Colors.red,),
             Container(color: Colors.green,),
-            PerfilPage(),
+            ProfilePage(user: widget.user,),
             // Container(color: Colors.blue,),
           ],
         ),

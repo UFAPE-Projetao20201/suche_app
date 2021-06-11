@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:suche_app/router.dart';
 import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'model/user.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +54,26 @@ class MyApp extends StatelessWidget {
       ),
       //Se o usuário estiver logado é redirecionado para home, senão, para o login
       initialRoute: user.isNotEmpty ? homeRoute : loginRoute,
+      onGenerateInitialRoutes: (String initialRouteName) {
+        if (initialRouteName == homeRoute) {
+          return [
+            RouteGenerator.generateRoute(
+              RouteSettings(
+                name: homeRoute,
+                arguments: User.fromJson(
+                  jsonDecode(user),
+                ),
+              ),
+            )
+          ];
+        } else {
+          return [
+            RouteGenerator.generateRoute(
+              RouteSettings(name: loginRoute),
+            )
+          ];
+        }
+      },
       onGenerateRoute: RouteGenerator.generateRoute,
 
       // home: LoginPage(),

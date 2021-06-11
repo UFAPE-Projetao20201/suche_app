@@ -22,7 +22,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      isPromoter: json['user']['isPromoter'] as bool,
+      isPromoter: json['user']['isPromoter'] == "true" ? true : false,
       id: json['user']['_id'] as String,
       name: json['user']['name'] as String,
       surname: json['user']['surname'] as String,
@@ -30,7 +30,7 @@ class User {
       phone: json['user']['phone'] as String,
       gender: json['user']['gender'] as String,
       birthDate: DateTime.parse(json['user']['birthDate']),
-      token: json['user']['birthDate'] as String,
+      token: json['token'] ?? json['token'] as String,
     );
   }
 
