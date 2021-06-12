@@ -324,8 +324,6 @@ class _RegisterEventPageState extends State<RegisterEventPage>{
                                           ),
                                         );
 
-                                        print('Entrou no IF');
-
                                         // Re-habilita a tela para receber toques
                                         setState(() {
                                           _absorbing = false;

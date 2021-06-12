@@ -9,11 +9,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:suche_app/main.dart';
+import 'package:suche_app/services/storage.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+
+    final SecureStorage secureStorage = SecureStorage();
+    String user = '';
+
+    // Obtem os dados do usuário para a primeira tela verificar o login
+    secureStorage
+        .readSecureData('user')
+        .then((value) => user = value)
+        .whenComplete(() async {
+      await tester.pumpWidget(MyApp(user: user,));
+    });
+
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    // await tester.pumpWidget(MyApp()); // Editado acima para receber o parâmetro
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
