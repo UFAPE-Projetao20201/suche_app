@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:suche_app/model/user.dart';
+import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
+import 'package:suche_app/views/components/bottom_navigation_component.dart';
+import 'package:suche_app/views/profilePage/profile_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  final User user;
+  HomePage({required this.user, Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
+  int _currentIndex = 0;
+  late PageController _pageController;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -23,35 +35,53 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('SucheApp'),
         actions: [
-          IconButton(icon: Icon(Icons.exit_to_app), onPressed: () { Navigator.pushNamedAndRemoveUntil(context, loginRoute, (route) => false); }, ),
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () async {
+              // Logout
+              final SecureStorage secureStorage = SecureStorage();
+              await secureStorage.deleteSecureData('user');
+
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                loginRoute,
+                (route) => false,
+              );
+            },
+          ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      bottomNavigationBar: BottomNavigationComponent.bottomNavigation(
+        _currentIndex,
+        (index) {
+          setState(() => _currentIndex = index);
+          _pageController.jumpToPage(index);
+        },
+      ),
+      body: SizedBox.expand(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() => _currentIndex = index);
+          },
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context).pushNamed(perfilRoute),
-              child: Text('Tela de Perfil'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context).pushNamed(registerEventRoute),
-              child: Text('Cadastrar Evento'),
-            ),
+            Container(color: Colors.blueGrey, child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(registerEventRoute),
+                    child: Text('Cadastrar Evento', style: TextStyle(color: Colors.white),),
+                  ),
+                ],
+              ),
+            ),),
+            Container(color: Colors.red,),
+            Container(color: Colors.green,),
+            ProfilePage(user: widget.user,),
+            // Container(color: Colors.blue,),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
