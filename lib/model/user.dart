@@ -22,7 +22,8 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      isPromoter: json['user']['isPromoter'] == "true" ? true : false,
+      //Conversão do booleano para string para garantir a funcionalidade na requisição da API e na requisição no Storage
+      isPromoter: json['user']['isPromoter'].toString() == 'true' ? true : false,
       id: json['user']['_id'] as String,
       name: json['user']['name'] as String,
       surname: json['user']['surname'] as String,
