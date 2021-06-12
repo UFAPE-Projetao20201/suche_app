@@ -55,7 +55,7 @@ class HttpAdapter implements HttpClient {
       case 200:
         return response.body.isEmpty ? null : jsonDecode(response.body);
       case 201:
-        return null;
+        return response.body.isEmpty ? null : jsonDecode(response.body);
       case 204:
         return null;
       case 400:

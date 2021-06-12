@@ -22,11 +22,19 @@ class UserProvider {
         "password": password,
       };
 
-      late final httpResponse = httpClient.request(
+      final httpResponse = await httpClient.request(
         url: '/auth/register/',
         method: 'post',
         body: body,
       );
+
+      // Transformando os dados em um User e codificando para Json personalizado
+      User user = User.fromJson(httpResponse);
+      String userJson = jsonEncode(user);
+
+      //Guardando o usuário de forma segura localmente
+      final SecureStorage secureStorage = SecureStorage();
+      await secureStorage.writeSecureData('user', userJson);
 
       return httpResponse;
     } catch (error) {
@@ -56,9 +64,6 @@ class UserProvider {
       //Guardando o usuário de forma segura localmente
       final SecureStorage secureStorage = SecureStorage();
       await secureStorage.writeSecureData('user', userJson);
-
-      //Lendo o usuário de forma segura localmente
-      String? value = await secureStorage.readSecureData('user');
 
       return httpResponse;
     } catch (error) {

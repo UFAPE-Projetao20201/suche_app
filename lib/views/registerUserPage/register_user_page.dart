@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mdi/mdi.dart';
 import 'package:suche_app/http/http_error.dart';
+import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/user_provider.dart';
+import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
@@ -304,7 +308,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                                       ),
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
-                                          try {
+                                          // try {
                                             // Desabilita a tela para não receber toques
                                             setState(() {
                                               _absorbing = true;
@@ -323,11 +327,18 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                                               name: _nameController.text,
                                               surname: _surnameController.text,
                                               email: _emailController.text,
-                                              birthDate: _birthController.text,
+                                              birthDate: _dateTime.toString(),
                                               gender: _dropdownValueSexo.toString(),
                                               password: _passwordController.text,
                                               phone: Util.sanitizePhone(_phoneController.text),
                                             );
+
+                                            //Guardando o usuário de forma segura localmente
+                                            final SecureStorage secureStorage = SecureStorage();
+
+                                            //Lendo o usuário de forma segura localmente
+                                            String? value = await secureStorage.readSecureData('user');
+                                            User user = User.fromJson(jsonDecode(value!),);
 
                                             // Re-habilita a tela para receber toques
                                             setState(() {
@@ -341,8 +352,9 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                                               context,
                                               homeRoute,
                                               (route) => false,
+                                              arguments: user,
                                             );
-                                          } catch (erro) {
+                                          /*} catch (erro) {
 
                                             // Re-habilita a tela para receber toques
                                             setState(() {
@@ -375,7 +387,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                                                 ),
                                               );
                                             }
-                                          }
+                                          }*/
                                         }
                                       },
                                       child: Text(
