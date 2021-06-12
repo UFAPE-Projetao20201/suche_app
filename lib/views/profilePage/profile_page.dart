@@ -33,7 +33,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.user);
     return Scaffold(
       /*appBar: AppBar(
         title: Text("Perfil"),
