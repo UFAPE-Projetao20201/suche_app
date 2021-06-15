@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets("successful login", (WidgetTester tester) async {
+  testWidgets("Login com sucesso", (WidgetTester tester) async {
     await tester.pumpWidget(MyApp(user: '',));
     expect(find.text('Suche'), findsOneWidget);
     Finder email = find.byType(TextField).at(0);
@@ -18,7 +18,7 @@ void main() {
     expect(find.text('Home'), findsOneWidget);
   });
 
-  testWidgets("trying to login when fields are not filled", (WidgetTester tester) async {
+  testWidgets("Login quando algum dos campos está vazio", (WidgetTester tester) async {
     await tester.pumpWidget(MyApp(user: '',));
     expect(find.text('Suche'), findsOneWidget);
     Finder email = find.byType(TextField).at(0);
@@ -32,7 +32,7 @@ void main() {
     //await tester.pumpAndSettle();
   });
 
-  testWidgets("trying to login when email does not exist in database", (WidgetTester tester) async {
+  testWidgets("Login quando email digitado não existe no banco", (WidgetTester tester) async {
     await tester.pumpWidget(MyApp(user: '',));
     expect(find.text('Suche'), findsOneWidget);
     Finder email = find.byType(TextField).at(0);
@@ -47,7 +47,7 @@ void main() {
     expect(find.text('Usuário não encontrado!'), findsOneWidget);
   });
 
-  testWidgets("trying to login when password does not match the user's password", (WidgetTester tester) async {
+  testWidgets("Login quando a senha não bate com a do usuário digitado", (WidgetTester tester) async {
     await tester.pumpWidget(MyApp(user: '',));
     expect(find.text('Suche'), findsOneWidget);
     Finder email = find.byType(TextField).at(0);

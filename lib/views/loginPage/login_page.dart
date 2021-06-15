@@ -236,7 +236,6 @@ class _LoginPageState extends State<LoginPage> {
                                           ),
                                         );
                                       } else {
-                                        print(erro);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
