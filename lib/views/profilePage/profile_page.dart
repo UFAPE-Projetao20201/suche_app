@@ -1,14 +1,9 @@
 import 'package:avatars/avatars.dart';
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mdi/mdi.dart';
 import 'package:suche_app/model/user.dart';
-import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/components/bottom_sheet_components.dart';
-import 'package:suche_app/views/components/page_components.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;

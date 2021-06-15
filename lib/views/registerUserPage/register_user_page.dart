@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mdi/mdi.dart';
-import 'package:suche_app/http/http_error.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/services/storage.dart';
