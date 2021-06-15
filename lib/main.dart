@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter_driver/driver_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:suche_app/router.dart';
 import 'package:suche_app/services/storage.dart';
@@ -10,8 +10,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'model/user.dart';
 
 void main() {
+  //Driver de Test
+  enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
-
   // Inicialização do secure storage
   final SecureStorage secureStorage = SecureStorage();
   String user = '';
