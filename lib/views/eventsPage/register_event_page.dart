@@ -80,9 +80,6 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
                   color: CustomColors.orangePrimary.shade400,
                   height: double.infinity,
                   width: double.infinity,
-
-
-
                   child: Stepper(
                     currentStep: _indexStepper,
                     onStepCancel: () {
