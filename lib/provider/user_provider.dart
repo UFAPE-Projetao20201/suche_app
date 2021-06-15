@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:http/http.dart';
+import 'package:suche_app/model/user.dart';
+import 'package:suche_app/services/storage.dart';
 
 import '../http/index.dart';
 
@@ -18,11 +22,19 @@ class UserProvider {
         "password": password,
       };
 
-      late final httpResponse = httpClient.request(
+      final httpResponse = await httpClient.request(
         url: '/auth/register/',
         method: 'post',
         body: body,
       );
+
+      // Transformando os dados em um User e codificando para Json personalizado
+      User user = User.fromJson(httpResponse);
+      String userJson = jsonEncode(user);
+
+      //Guardando o usuário de forma segura localmente
+      final SecureStorage secureStorage = SecureStorage();
+      await secureStorage.writeSecureData('user', userJson);
 
       return httpResponse;
     } catch (error) {
@@ -32,7 +44,7 @@ class UserProvider {
   }
 
 
-  Future getUser({String? email, String? password}) async {
+  Future userLogin({String? email, String? password}) async {
     try {
       Map body = {
         "email": email,
@@ -45,6 +57,14 @@ class UserProvider {
         body: body,
       );
 
+      // Transformando os dados em um User e codificando para Json personalizado
+      User user = User.fromJson(httpResponse);
+      String userJson = jsonEncode(user);
+
+      //Guardando o usuário de forma segura localmente
+      final SecureStorage secureStorage = SecureStorage();
+      await secureStorage.writeSecureData('user', userJson);
+
       return httpResponse;
     } catch (error) {
       print("getUser error - " + error.toString());
@@ -52,17 +72,24 @@ class UserProvider {
     }
   }
 
-  Future setPromoterUser({String? email, String? cpfCnpj}) async {
+  Future setPromoterUser({String? email, String? cpfCnpj, String? token}) async {
     try {
       Map body = {
         "email": email,
         "CPF_CNPJ": cpfCnpj,
       };
 
+      Map headers = {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': 'Bearer '+token!,
+      };
+
       final httpResponse = await httpClient.request(
         url: '/auth/promote/',
-        method: 'post',
+        method: 'put',
         body: body,
+        headers: headers,
       );
 
       return httpResponse;

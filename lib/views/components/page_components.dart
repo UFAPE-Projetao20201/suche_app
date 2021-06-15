@@ -11,12 +11,12 @@ class PageComponents {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
+            CustomColors.orangePrimary.shade50,
+            CustomColors.orangePrimary.shade100,
+            CustomColors.orangePrimary.shade100,
             CustomColors.orangePrimary.shade200,
-            CustomColors.orangePrimary.shade300,
-            CustomColors.orangePrimary.shade400,
-            CustomColors.orangePrimary.shade600,
           ],
-          stops: [0.1, 0.4, 0.7, 0.99],
+          stops: [0.1, 0.25, 0.65, 0.99],
         ),
       ),
     );

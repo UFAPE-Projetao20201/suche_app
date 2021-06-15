@@ -1,54 +1,66 @@
+import 'package:avatars/avatars.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mdi/mdi.dart';
+import 'package:suche_app/model/user.dart';
 import 'package:suche_app/util/constants.dart';
+import 'package:suche_app/util/custom_colors.dart';
+import 'package:suche_app/views/components/bottom_sheet_components.dart';
 import 'package:suche_app/views/components/page_components.dart';
 
-class PerfilPage extends StatefulWidget {
-  const PerfilPage({Key? key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  final User user;
+
+  const ProfilePage({Key? key, required this.user}) : super(key: key);
 
   @override
-  _PerfilPageState createState() => _PerfilPageState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _PerfilPageState extends State<PerfilPage> {
-  String _emailUser = "edsgerdijkstra@gmail.com";
+class _ProfilePageState extends State<ProfilePage> {
+  // Atividade de edição de usuário congelada
+  /*String _emailUser = "edsgerdijkstra@gmail.com";
   String _nameUser = "Edsger";
   String _surnameUser = "Dijkstra";
   String? _sexoUser = "Masculino";
-  DateTime? _birthUser = DateTime.now();
+  DateTime? _birthUser = DateTime.now();*/
+
+  TextEditingController _cpfCnpjlController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text("Perfil"),
-      ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              PageComponents.buildBackgroundContainer(),
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 1080,
-                        height: 30,
-                      ),
-                      SizedBox(
+      ),*/
+      resizeToAvoidBottomInset: true,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
+          children: <Widget>[
+            // PageComponents.buildBackgroundContainer(),
+            Container(
+              color: CustomColors.orangePrimary.shade300,
+              height: double.infinity,
+              width: double.infinity,
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 40.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 1080,
+                      height: 30,
+                    ),
+                    // Antigo form de foto caso precise usar
+                    /*SizedBox(
                         height: 150,
                         width: 150,
                         child: Stack(
@@ -84,33 +96,46 @@ class _PerfilPageState extends State<PerfilPage> {
                             ),
                           ],
                         ),
+                      ),*/
+                    Avatar(
+                      name: widget.user.name + ' ' + widget.user.surname,
+                      placeholderColors: [
+                        Colors.white,
+                      ],
+                      textStyle: TextStyle(
+                        color: CustomColors.orangePrimary,
+                        fontSize: 40,
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Edsger Dijkstra',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 25,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Divider(
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      widget.user.name + ' ' + widget.user.surname,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
                         color: Colors.white,
+                        fontFamily: 'OpenSans',
+                        fontSize: 25,
+                        fontWeight: FontWeight.w900,
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      ElevatedButton(
-                        onPressed: () => Navigator.of(context).pushNamed(registerPromoterRoute),//print('clicou tornar-se promotor'),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Divider(
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Visibility(
+                      visible: !widget.user.isPromoter,
+                      child: ElevatedButton(
+                        onPressed: () => BottomSheetComponents.promoterBottomSheet(context, _formKey, _cpfCnpjlController, widget.user),
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
+                          MaterialStateProperty.all(Colors.transparent),
                           elevation: MaterialStateProperty.all(0),
                         ),
                         child: Row(
@@ -127,7 +152,11 @@ class _PerfilPageState extends State<PerfilPage> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      replacement: Container(),
+                    ),
+
+                    // Atividade de edição de usuário congelada
+                    /*SizedBox(
                         height: 5,
                       ),
                       Divider(
@@ -484,14 +513,13 @@ class _PerfilPageState extends State<PerfilPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40.0),
-                      // aqui
-                    ],
-                  ),
+                      SizedBox(height: 40.0),*/
+                    // aqui
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
