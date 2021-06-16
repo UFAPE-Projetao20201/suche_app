@@ -13,7 +13,7 @@ before_script:
   - git clone https://github.com/flutter/flutter.git -b beta
   - ./flutter/bin/flutter doctor
 script:
-  - flutter drive --driver=test_driver/integration_test.dart --target=integration_test/login_test.dart
+  - ./flutter/bin/flutter drive --driver=test_driver/integration_test.dart --target=integration_test/login_test.dart
 cache:
   directories:
     - $HOME/.pub-cache
