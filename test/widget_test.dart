@@ -17,7 +17,7 @@ void main() {
     final SecureStorage secureStorage = SecureStorage();
     String user = '';
 
-    // Obtem os dados do usuário para a primeira tela verificar o login
+    // Obtem os dados do usuário para a primeira tela verificar o
     secureStorage
         .readSecureData('user')
         .then((value) => user = value)
