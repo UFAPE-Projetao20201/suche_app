@@ -3,7 +3,7 @@ import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/views/homePage/home_page.dart';
 import 'package:suche_app/views/loginPage/login_page.dart';
 import 'package:suche_app/views/profilePage/profile_page.dart';
-import 'package:suche_app/views/eventsPage/register_event_page.dart';
+import 'package:suche_app/views/eventsPage/registerEventPage/register_event_page.dart';
 import 'package:suche_app/views/registerUserPage/register_user_page.dart';
 
 import 'model/user.dart';

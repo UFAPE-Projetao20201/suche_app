@@ -7,6 +7,7 @@ import 'package:suche_app/views/profilePage/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
+
   HomePage({required this.user, Key? key}) : super(key: key);
 
   @override
@@ -65,20 +66,33 @@ class _HomePageState extends State<HomePage> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            Container(color: Colors.blueGrey, child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pushNamed(registerEventRoute),
-                    child: Text('Cadastrar Evento', style: TextStyle(color: Colors.white),),
-                  ),
-                ],
+            Container(
+              color: Colors.blueGrey,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed(registerEventRoute),
+                      child: Text(
+                        'Cadastrar Evento',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),),
-            Container(color: Colors.red,),
-            Container(color: Colors.green,),
-            ProfilePage(user: widget.user,),
+            ),
+            Container(
+              color: Colors.red,
+            ),
+            Container(
+              color: Colors.green,
+            ),
+            ProfilePage(
+              user: widget.user,
+            ),
             // Container(color: Colors.blue,),
           ],
         ),
