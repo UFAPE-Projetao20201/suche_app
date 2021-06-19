@@ -31,6 +31,8 @@ class CustomColors {
 
   static Color colorMediumGray = Color(0xFFDFDFDF);
 
+  static Color colorDarkGray = Color(0xFFADADAD);
+
   static MaterialColor orangePrimary = const MaterialColor(
     0xFFFF7200,
     const {
