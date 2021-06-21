@@ -25,6 +25,7 @@ dependencies:
   mask_text_input_formatter:
   mdi: ^5.0.0-nullsafety.0
   validators:
+  flutter_switch: ^0.3.1
 
 dev_dependencies:
   integration_test:

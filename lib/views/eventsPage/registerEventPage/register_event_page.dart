@@ -1,13 +1,8 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mdi/mdi.dart';
-import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
-import 'package:suche_app/util/util.dart';
-import 'package:suche_app/views/components/form_components.dart';
 import 'package:suche_app/views/components/page_components.dart';
-
 import 'components/event_description_step.dart';
 import 'components/event_location_step.dart';
 
