@@ -1,6 +1,11 @@
-import 'package:avatars/avatars.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
+import 'package:avatars/avatars.dart';
+
+// Project imports:
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/components/bottom_sheet_components.dart';

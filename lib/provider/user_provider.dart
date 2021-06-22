@@ -1,9 +1,12 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:http/http.dart';
+
+// Project imports:
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/services/storage.dart';
-
 import '../http/index.dart';
 
 class UserProvider {

@@ -1,8 +1,15 @@
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:mdi/mdi.dart';
+import 'package:validators/validators.dart';
+
+// Project imports:
 import 'package:suche_app/http/http_error.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/user_provider.dart';
@@ -11,7 +18,6 @@ import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/components/form_components.dart';
 import 'package:suche_app/views/components/page_components.dart';
-import 'package:validators/validators.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
