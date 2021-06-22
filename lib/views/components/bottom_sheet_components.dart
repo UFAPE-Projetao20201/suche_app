@@ -1,7 +1,12 @@
-import 'package:brasil_fields/brasil_fields.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:mdi/mdi.dart';
+
+// Project imports:
 import 'package:suche_app/http/http_error.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/user_provider.dart';

@@ -1,6 +1,11 @@
-import 'package:brasil_fields/brasil_fields.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:brasil_fields/brasil_fields.dart';
+
+// Project imports:
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/components/page_components.dart';
 import 'components/event_description_step.dart';
