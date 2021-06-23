@@ -12,4 +12,8 @@ class Util {
     return cpfCnpj;
   }
 
+  static String toMoney(double money) {
+    return 'R\$ ' + money.toStringAsPrecision(2);
+  }
+
 }
