@@ -41,7 +41,7 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
   TextEditingController _categoryController = TextEditingController();
   TextEditingController _keywordsController = TextEditingController(); //Criar função para tratar o texto recebido e gerar uma array de palavras?
   TextEditingController _dateController = TextEditingController();
-  TextEditingController _priceController = TextEditingController(); //Criar função para tratar o texto recebido e gerar um valor sem cifrão, virgula e afins?
+  TextEditingController _priceController = TextEditingController();
   TextEditingController _linkController = TextEditingController();
   TextEditingController _typeController = TextEditingController();
   TextEditingController _streetController = TextEditingController();
@@ -116,12 +116,84 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
                       }
                     },
                     onStepContinue: () async {
+                      //Botão continuar do Step de informação do evento
                       if (_indexStepper <= 0) {
-                        if(_formKey1.currentState!.validate()){
+                        if(_formKey1.currentState!.validate() && _dropdownValueType == 'Presencial'){
                           setState(() {
+                            print("Entrou");
                             _indexStepper += 1;
                           });
+                        //Cadastrando evento online
+                        }else if (_formKey1.currentState!.validate()){
+                            setState(() {
+                              //Desabilitando o toque da tela
+                              //_absorbing = true;
+                            });
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Processando dados...'),
+                              ),
+                            );
+
+                            final EventProvider _apiClient = new EventProvider();
+
+                            // Variável booleana para evento online/presencial
+                            if (_dropdownValueType == 'Presencial'){
+                              _isOnline = false;
+                            }else if (_dropdownValueType == 'Online'){
+                              _isOnline = true;
+                            }
+
+                            await _apiClient.createEventOnline(
+                              token: widget.user.token,
+                              promoter: widget.user.getId(),
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+                              category: _dropdownValueCategory.toString(),
+                              value: double.parse(_priceController.text.substring(3,_priceController.text.length).replaceAll(",",".")),
+                              date: _dateTime.toString(),
+                              keywords: _keywordsController.text.split(","), //Refatorar futuramente tratando de uma forma mais robusta
+                              link: _linkController.text,
+                              isOnline: _isOnline,
+                              isLocal: !_isOnline,
+                            ).then((value) => showDialog(context: context, builder: (ctx) => AlertDialog(
+                              title: Text('Parabéns!', style: TextStyle(
+                                color: CustomColors.orangePrimary.shade400,
+                                fontFamily: 'OpenSans',
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.w900,
+                              ),),
+                              content: Text('Evento criado com sucesso!', style: TextStyle(
+                                color: CustomColors.orangePrimary.shade400,
+                                fontFamily: 'OpenSans',
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w900,
+                              ),),
+                              backgroundColor: CustomColors.colorLightGray,
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    homeRoute,
+                                        (route) => false,
+                                    arguments: widget.user,
+                                  ),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            )) );
+
+                            // Re-habilita a tela para receber toques
+                            setState(() {
+                              _absorbing = false;
+                            });
+
+                            ScaffoldMessenger.of(context)
+                                .clearSnackBars();
                         }
+
+                      //Botão continuar do Step de localização do evento
                       }else if (_indexStepper == 1) {
                         setState(() {
                         });
@@ -140,9 +212,9 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
                           final EventProvider _apiClient = new EventProvider();
 
                           // Variável booleana para evento online/presencial
-                          if (_typeController.text == 'Presencial'){
+                          if (_dropdownValueType == 'Presencial'){
                             _isOnline = false;
-                          }else if (_typeController.text == 'Online'){
+                          }else if (_dropdownValueType == 'Online'){
                             _isOnline = true;
                           }
 

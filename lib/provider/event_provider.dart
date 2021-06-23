@@ -47,6 +47,41 @@ class EventProvider {
     }
   }
 
+  Future createEventOnline({required String token,required String promoter, required String name, required String description, required String category, required double value, required String date, required List<String> keywords, required String link, required bool isOnline, required bool isLocal}) async {
+    try {
+      Map body = {
+        "promoter": promoter,
+        "name": name,
+        "description": description,
+        "category": category,
+        "value": value,
+        "date": date,
+        "keywords": keywords,
+        "link": link,
+        "isOnline": isOnline,
+        "isLocal": isLocal
+      };
+
+      Map headers = {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': 'Bearer '+token,
+      };
+
+      final httpResponse = await httpClient.request(
+        url: '/event/',
+        method: 'post',
+        body: body,
+        headers: headers,
+      );
+
+      return httpResponse;
+    } catch (error) {
+      print("createEvent error - " + error.toString());
+      throw error;
+    }
+  }
+
   Future listEvents({String? email, String? password}) async {
     try {
       final httpResponse = await httpClient.request(

@@ -82,12 +82,15 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    TextButton(
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed(registerEventRoute, arguments: widget.user),
-                      child: Text(
-                        'Cadastrar Evento',
-                        style: TextStyle(color: Colors.white),
+                    Visibility(
+                      visible: widget.user.isPromoter,
+                      child: TextButton(
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed(registerEventRoute, arguments: widget.user),
+                        child: Text(
+                          'Cadastrar Evento',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
