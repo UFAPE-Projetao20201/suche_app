@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:suche_app/util/custom_colors.dart';
 
 class PageComponents {

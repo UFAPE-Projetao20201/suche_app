@@ -1,6 +1,11 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:mdi/mdi.dart';
+
+// Project imports:
 import 'package:suche_app/util/custom_colors.dart';
 
 class BottomNavigationComponent {

@@ -1,10 +1,14 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart';
-import 'package:suche_app/app_configuration.dart';
 
-import './http_error.dart';
+// Package imports:
+import 'package:http/http.dart';
+
+// Project imports:
+import 'package:suche_app/app_configuration.dart';
 import './http_client.dart';
+import './http_error.dart';
 
 class HttpAdapter implements HttpClient {
   final Client client;

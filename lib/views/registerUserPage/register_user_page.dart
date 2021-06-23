@@ -1,10 +1,17 @@
+// Dart imports:
 import 'dart:convert';
 
-import 'package:brasil_fields/brasil_fields.dart';
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:mdi/mdi.dart';
+import 'package:validators/validators.dart';
+
+// Project imports:
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/services/storage.dart';
@@ -13,7 +20,6 @@ import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
 import 'package:suche_app/views/components/form_components.dart';
 import 'package:suche_app/views/components/page_components.dart';
-import 'package:validators/validators.dart';
 
 class RegisterUserPage extends StatefulWidget {
   const RegisterUserPage({Key? key}) : super(key: key);

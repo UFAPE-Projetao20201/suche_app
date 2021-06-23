@@ -1,12 +1,18 @@
+// Dart imports:
 import 'dart:convert';
-import 'package:flutter_driver/driver_extension.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_driver/driver_extension.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+// Project imports:
 import 'package:suche_app/router.dart';
 import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'model/user.dart';
 
 void main() {
