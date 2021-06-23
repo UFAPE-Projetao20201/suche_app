@@ -17,4 +17,8 @@ class Util {
     return cep;
   }
 
+  static String toMoney(double money) {
+    return 'R\$ ' + money.toStringAsPrecision(2);
+  }
+
 }

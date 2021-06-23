@@ -47,4 +47,20 @@ class EventProvider {
     }
   }
 
+  Future listEvents({String? email, String? password}) async {
+    try {
+      final httpResponse = await httpClient.request(
+        url: '/event',
+        method: 'get',
+      );
+
+
+
+
+      return httpResponse;
+    } catch (error) {
+      print("getEvents error - " + error.toString());
+      throw error;
+    }
+  }
 }

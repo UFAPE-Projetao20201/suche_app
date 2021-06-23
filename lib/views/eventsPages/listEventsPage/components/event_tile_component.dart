@@ -1,17 +1,22 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 // Package imports:
 import 'package:mdi/mdi.dart';
+import 'package:suche_app/model/event.dart';
 
 // Project imports:
 import 'package:suche_app/util/custom_colors.dart';
+import 'package:suche_app/util/util.dart';
 
 class EventTileComponent {
 
-  static buildEventTileComponent(){
+  static buildEventTileComponent(Event event){
     return Container(
-      height: 220,
+      constraints: BoxConstraints(
+        maxHeight: double.infinity,
+      ),
       padding: EdgeInsets.all(15.0),
       color: CustomColors.colorLightGray,
       child: Column(
@@ -20,7 +25,7 @@ class EventTileComponent {
 
           // Nome do Evento
           Text(
-            'Nome do Evento',
+            event.name,
             style: TextStyle(
               color: CustomColors.orangePrimary.shade400,
               fontFamily: 'OpenSans',
@@ -31,7 +36,7 @@ class EventTileComponent {
 
           // Descrição do evento
           Text(
-            'Descrição do evento aqui',
+            event.description,
             style: TextStyle(
                 color: CustomColors.colorOrangeSecondary,
                 fontFamily: 'OpenSans',
@@ -51,7 +56,7 @@ class EventTileComponent {
                 ),
                 SizedBox(width: 10.0,),
                 Text(
-                  'Suche Eventos',
+                  'Suche Eventos', //TODO: CORRIGIR REQUISIÇÃO DA API PARA PROMOTOR
                   style: TextStyle(
                     color: CustomColors.colorOrangeSecondary,
                     fontFamily: 'OpenSans',
@@ -64,22 +69,24 @@ class EventTileComponent {
 
           //Data do evento
           Row(
-              children: <Widget>[
-                Icon(
-                  Mdi.calendarStar,
+            children: <Widget>[
+              Icon(
+                Mdi.calendarStar,
+                color: CustomColors.colorOrangeSecondary,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Text(
+                DateFormat('dd-MM-yyyy – kk:mm').format(event.date),
+                style: TextStyle(
                   color: CustomColors.colorOrangeSecondary,
+                  fontFamily: 'OpenSans',
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w400,
                 ),
-                SizedBox(width: 10.0,),
-                Text(
-                  '22/22/2222',
-                  style: TextStyle(
-                    color: CustomColors.colorOrangeSecondary,
-                    fontFamily: 'OpenSans',
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ]
+              ),
+            ],
           ),
 
           //Valor do evento
@@ -91,7 +98,7 @@ class EventTileComponent {
                 ),
                 SizedBox(width: 10.0,),
                 Text(
-                  'R\$ 22,22',
+                  Util.toMoney(event.value),
                   style: TextStyle(
                     color: CustomColors.colorOrangeSecondary,
                     fontFamily: 'OpenSans',
@@ -112,7 +119,7 @@ class EventTileComponent {
                 SizedBox(width: 10.0,),
                 Flexible(
                   child: Text(
-                    'Rua da Festança, 10, Festival, Garanhuns-PE',
+                    'Rua da Festança, 10, Festival, Garanhuns-PE', //TODO: CORRIGIR REQUISIÇÃO DA API PARA LOCALIZAÇÃO
                     style: TextStyle(
                       color: CustomColors.colorOrangeSecondary,
                       fontFamily: 'OpenSans',
@@ -133,7 +140,7 @@ class EventTileComponent {
                 ),
                 SizedBox(width: 10.0,),
                 Text(
-                  'Show',
+                  event.category,
                   style: TextStyle(
                     color: CustomColors.colorOrangeSecondary,
                     fontFamily: 'OpenSans',
