@@ -11,6 +11,11 @@ class Util {
 
     return cpfCnpj;
   }
+  static String sanitizeCEP(String cep) {
+    cep = cep.replaceAll('.', '').replaceAll('-', '').replaceAll(' ', '');
+
+    return cep;
+  }
 
   static String toMoney(double money) {
     return 'R\$ ' + money.toStringAsPrecision(2);
