@@ -49,6 +49,10 @@ class User {
     'token': token,
   };
 
+  String getId (){
+    return this.id;
+  }
+
   @override
   String toString() {
     return 'User{isPromoter: $isPromoter, id: $id, name: $name, surname: $surname, email: $email, phone: $phone, gender: $gender, birthDate: $birthDate, token: $token}';

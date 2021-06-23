@@ -11,5 +11,10 @@ class Util {
 
     return cpfCnpj;
   }
+  static String sanitizeCEP(String cep) {
+    cep = cep.replaceAll('.', '').replaceAll('-', '').replaceAll(' ', '');
+
+    return cep;
+  }
 
 }

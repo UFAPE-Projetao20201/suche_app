@@ -38,7 +38,16 @@ class RouteGenerator {
         }
         return _errorRoute();
       case registerEventRoute:
-        return MaterialPageRoute(builder: (_) => RegisterEventPage());
+        if (args is User) {
+          return MaterialPageRoute(
+            builder: (_) => RegisterEventPage(
+              user: args,
+            ),
+          );
+        }else{
+          print("Deu merda");
+        return _errorRoute ();
+    }
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

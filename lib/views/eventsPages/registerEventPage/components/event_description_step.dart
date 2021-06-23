@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:io';
 
 // Package imports:
 import 'package:brasil_fields/brasil_fields.dart';
@@ -10,6 +11,7 @@ import 'package:mdi/mdi.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/components/form_components.dart';
+import 'package:validators/validators.dart';
 
 class EventDescriptionStep{
 
@@ -192,8 +194,6 @@ class EventDescriptionStep{
                         (value) {
                       if (value == null || value.isEmpty) {
                         return 'O preço é um campo obrigatório';
-                      } else if (!nameExp.hasMatch(value)) {
-                        return 'Insira um preço válido';
                       } else {
                         return null;
                       }
@@ -215,8 +215,8 @@ class EventDescriptionStep{
                     _linkController,
                     TextInputType.url,
                         (value) {
-                      if (!nameExp.hasMatch(value!)) {
-                        return 'Insira um nome válido (a-z A-Z)';
+                      if (!isURL(value)) {
+                        return 'Insira um link válido';
                       } else {
                         return null;
                       }

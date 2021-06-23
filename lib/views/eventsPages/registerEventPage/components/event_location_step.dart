@@ -10,6 +10,7 @@ import 'package:mdi/mdi.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
 import 'package:suche_app/views/components/form_components.dart';
+import 'package:validators/validators.dart';
 
 class EventLocationStep{
 
@@ -66,8 +67,8 @@ class EventLocationStep{
                         (value) {
                       if (value == null || value.isEmpty) {
                         return 'O número é um campo obrigatório';
-                      } else if (!nameExp.hasMatch(value)) {
-                        return 'Insira um número válido (a-z A-Z)';
+                      } else if (!isInt(value)) {
+                        return 'Insira um número válido';
                       } else {
                         return null;
                       }
@@ -104,7 +105,7 @@ class EventLocationStep{
                         (value) {
                       if (value == null || value.isEmpty) {
                         return 'O CEP é um campo obrigatório';
-                      } else if (!!(Util.sanitizePhone(value).length == 8)) {
+                      } else if (!(Util.sanitizeCEP(value).length == 8)) {
                         return 'Insira um CEP válido';
                       } else {
                         return null;
