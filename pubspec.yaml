@@ -23,6 +23,7 @@ dependencies:
   flutter_secure_storage: ^4.2.0
   flutter_switch: ^0.3.1
   http:
+  intl:
   import_sorter: ^4.6.0
   mask_text_input_formatter:
   mdi: ^5.0.0-nullsafety.0

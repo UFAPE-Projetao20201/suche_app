@@ -78,7 +78,7 @@ class EventTileComponent {
                 width: 10.0,
               ),
               Text(
-                DateFormat('dd-MM-yyyy – kk:mm').format(event.date),
+                DateFormat('dd/MM/yyyy – HH:mm').format(event.date),
                 style: TextStyle(
                   color: CustomColors.colorOrangeSecondary,
                   fontFamily: 'OpenSans',

@@ -29,7 +29,6 @@ class Event {
   });
 
   factory Event.fromJson(Map<String, dynamic> json) {
-    print(json['keywords']);
     return Event(
       // promoter: User.fromJson(json['promoter']),
       name: json['name'] as String,
