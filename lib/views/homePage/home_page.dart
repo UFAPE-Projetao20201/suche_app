@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            ListEventsPage(),
+            ListEventsPage(user: widget.user,),
             Container(
               color: Colors.red,
             ),
