@@ -45,7 +45,6 @@ class RouteGenerator {
             ),
           );
         }else{
-          print("Deu merda");
         return _errorRoute ();
     }
       default:
