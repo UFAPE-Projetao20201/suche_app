@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:intl/intl.dart';
+
 class Util {
 
   static String sanitizePhone(String phone) {
@@ -18,7 +22,8 @@ class Util {
   }
 
   static String toMoney(double money) {
-    return 'R\$ ' + money.toStringAsPrecision(2);
+    NumberFormat formatter = NumberFormat.simpleCurrency(decimalDigits: 2, locale: 'PT-BR');
+    return formatter.format(money);
   }
 
 }
