@@ -24,6 +24,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
   bool _switchTypeEventValue = true;
   List<Event> eventList = [];
   bool erro = false;
+  bool loading = false;
 
   @override
   void initState() {
@@ -32,14 +33,24 @@ class _ListEventsPageState extends State<ListEventsPage> {
   }
 
   getEvents() async {
+    setState(() {
+      loading = true;
+    });
+
     if(_switchTypeEventValue){
       await getPresentialEvent();
     } else {
       await getOnlineEvent();
     }
+
+    setState(() {
+      loading = false;
+    });
   }
 
   getPresentialEvent() async {
+    print('carregando getPresentialEvent');
+
     setState(() {
       eventList = [];
     });
@@ -55,12 +66,15 @@ class _ListEventsPageState extends State<ListEventsPage> {
           eventList.add(event);
         }
       });
+      print(eventList.isEmpty);
+      print(eventList.length);
     } on Exception catch (e) {
       print('excecao -> ' + e.toString());
     }
   }
 
   getOnlineEvent() async {
+    print('carregando getOnlineEvent');
     setState(() {
       eventList = [];
     });
@@ -76,6 +90,8 @@ class _ListEventsPageState extends State<ListEventsPage> {
           eventList.add(event);
         }
       });
+      print(eventList.isEmpty);
+      print(eventList.length);
     } on Exception catch (e) {
       print('excecao -> ' + e.toString());
     }
@@ -83,6 +99,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
 
   error() {
     setState(() {
+      loading = false;
       erro = true;
     });
   }
@@ -93,80 +110,103 @@ class _ListEventsPageState extends State<ListEventsPage> {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: eventList.isNotEmpty,
-      replacement: Center(child: CircularProgressIndicator()),
-      child: Visibility(
-        visible: !erro,
-        replacement: Text('erro'),
-        child: Container(
-            color: CustomColors.colorLightGray,
-            height: double.infinity,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 20.0),
-                Text(
-                  'Eventos',
-                  style: TextStyle(
-                    color: CustomColors.orangePrimary.shade400,
-                    fontFamily: 'OpenSans',
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.w900,
+      visible: !erro,
+      replacement: Text('erro'),
+      child: Container(
+          color: CustomColors.colorLightGray,
+          height: double.infinity,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 20.0),
+              Text(
+                'Eventos',
+                style: TextStyle(
+                  color: CustomColors.orangePrimary.shade400,
+                  fontFamily: 'OpenSans',
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              SizedBox(height: 20.0),
+              FlutterSwitch(
+                width: 150.0,
+                height: 45.0,
+                toggleSize: 45.0,
+                borderRadius: 30.0,
+                padding: 8.0,
+                valueFontSize: 16,
+                showOnOff: true,
+                toggleColor: CustomColors.colorLightGray,//
+                activeColor: CustomColors.orangePrimary.shade400,
+                activeText: "Prensencial",
+                activeTextColor: CustomColors.colorLightGray,//
+                activeTextFontWeight: FontWeight.w900 ,
+                inactiveColor: CustomColors.orangePrimary.shade400,
+                inactiveText: "Virtual",
+                inactiveTextColor: CustomColors.colorLightGray,//
+                inactiveTextFontWeight: FontWeight.w900,
+                value: _switchTypeEventValue,
+                onToggle: (val) {
+                  setState(() {
+                    _switchTypeEventValue = !_switchTypeEventValue;
+                    getEvents();
+                  });
+                },
+              ),
+              SizedBox(height: 20.0),
+              Divider(
+                color: CustomColors.colorOrangeSecondary,
+              ),
+              Visibility(
+                visible: !loading,
+                replacement: Flexible(
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
                 ),
-                SizedBox(height: 20.0),
-                FlutterSwitch(
-                  width: 200.0,
-                  height: 55.0,
-                  toggleSize: 45.0,
-                  borderRadius: 30.0,
-                  padding: 8.0,
-                  valueFontSize: 23,
-                  showOnOff: true,
-                  toggleColor: CustomColors.colorLightGray,//
-                  activeColor: CustomColors.orangePrimary.shade400,
-                  activeText: "Prensencial",
-                  activeTextColor: CustomColors.colorLightGray,//
-                  activeTextFontWeight: FontWeight.w900 ,
-                  inactiveColor: CustomColors.orangePrimary.shade400,
-                  inactiveText: "Virtual",
-                  inactiveTextColor: CustomColors.colorLightGray,//
-                  inactiveTextFontWeight: FontWeight.w900,
-                  value: _switchTypeEventValue,
-                  onToggle: (val) {
-                    setState(() {
-                      _switchTypeEventValue = !_switchTypeEventValue;
-                      getEvents();
-                    });
-                  },
-                ),
-                SizedBox(height: 20.0),
-                Divider(
-                  color: CustomColors.colorOrangeSecondary,
-                ),
-                Expanded(
-                  child:ListView.builder(
-                    itemCount: eventList.length, //items.length
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Column(
-                          children: [
-                            EventTileComponent.buildEventTileComponent(eventList[index]),
-                            Divider(
-                              color: CustomColors.colorOrangeSecondary,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                child:  Visibility(
+                  visible: eventList.isNotEmpty,
+                  replacement: Flexible(
+                    child: Center(
+                      child: Text(
+                      'Não há eventos cadastrados',
+                      textAlign: TextAlign.center,
+                        style: TextStyle(
+                        color: CustomColors.orangePrimary.shade400,
+                        fontFamily: 'OpenSans',
+                        fontSize: 30.0,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    ),
                   ),
-                )
+                  child: Expanded(
+                    child:ListView.builder(
+                      itemCount: eventList.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Column(
+                            children: [
+                              EventTileComponent.buildEventTileComponent(
+                                  eventList[index]),
+                              Divider(
+                                color: CustomColors.colorOrangeSecondary,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              )
 
-              ],
+            ],
 
-            )
-        ),
+          )
       ),
     );
   }

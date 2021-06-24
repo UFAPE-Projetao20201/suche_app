@@ -109,26 +109,55 @@ class EventTileComponent {
               ]
           ),
 
-          //Local do evento
-          Row(
-              children: <Widget>[
-                Icon(
-                  Mdi.mapMarker,
-                  color: CustomColors.colorOrangeSecondary,
-                ),
-                SizedBox(width: 10.0,),
-                Flexible(
-                  child: Text(
-                    event.localization == null ? 'Não informado' : event.localization!.street + ', Nº ' + event.localization!.number.toString() + ' - ' + event.localization!.city, // NULLABLE ??
-                    style: TextStyle(
-                      color: CustomColors.colorOrangeSecondary,
-                      fontFamily: 'OpenSans',
-                      fontSize: 15.0,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+          //Local do evento (online/presencial)
+          Visibility(
+            visible: event.localization != null,
+            child: Row(children: <Widget>[
+              Icon(
+                Mdi.mapMarker,
+                color: CustomColors.colorOrangeSecondary,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Flexible(
+                child: Text(
+                  event.localization == null
+                      ? 'Não informado'
+                      : event.localization!.street +
+                          ', Nº ' +
+                          event.localization!.number.toString() +
+                          ' - ' +
+                          event.localization!.city, // NULLABLE ??
+                  style: TextStyle(
+                    color: CustomColors.colorOrangeSecondary,
+                    fontFamily: 'OpenSans',
+                    fontSize: 15.0,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ]
+              ),
+            ]),
+            replacement: Row(children: <Widget>[
+              Icon(
+                Mdi.link,
+                color: CustomColors.colorOrangeSecondary,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Flexible(
+                child: Text(
+                  event.link, // NULLABLE ??
+                  style: TextStyle(
+                    color: CustomColors.colorOrangeSecondary,
+                    fontFamily: 'OpenSans',
+                    fontSize: 15.0,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ]),
           ),
 
           //Categoria do evento
