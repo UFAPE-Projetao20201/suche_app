@@ -278,6 +278,7 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
                         _indexStepper = index;
                       });
                     },
+                    physics: BouncingScrollPhysics(),
                     steps: <Step>[
                       Step(
                         title: const Text(
