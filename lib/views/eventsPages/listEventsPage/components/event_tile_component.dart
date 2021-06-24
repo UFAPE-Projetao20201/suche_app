@@ -56,7 +56,7 @@ class EventTileComponent {
                 ),
                 SizedBox(width: 10.0,),
                 Text(
-                  'Suche Eventos', //TODO: CORRIGIR REQUISIÇÃO DA API PARA PROMOTOR
+                  event.promoter == null ? 'Não informado' : event.promoter!.name + ' ' + event.promoter!.surname, // NULLABLE ??
                   style: TextStyle(
                     color: CustomColors.colorOrangeSecondary,
                     fontFamily: 'OpenSans',
@@ -119,7 +119,7 @@ class EventTileComponent {
                 SizedBox(width: 10.0,),
                 Flexible(
                   child: Text(
-                    'Rua da Festança, 10, Festival, Garanhuns-PE', //TODO: CORRIGIR REQUISIÇÃO DA API PARA LOCALIZAÇÃO
+                    event.localization == null ? 'Não informado' : event.localization!.street + ', Nº ' + event.localization!.number.toString() + ' - ' + event.localization!.city, // NULLABLE ??
                     style: TextStyle(
                       color: CustomColors.colorOrangeSecondary,
                       fontFamily: 'OpenSans',
