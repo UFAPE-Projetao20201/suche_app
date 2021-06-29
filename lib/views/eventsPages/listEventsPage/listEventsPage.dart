@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -29,6 +31,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
   bool erro = false;
   bool loading = false;
   String? _dropdownValueCategory;
+  Timer? searchOnStoppedTyping;
 
   TextEditingController _categoryController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
@@ -58,7 +61,17 @@ class _ListEventsPageState extends State<ListEventsPage> {
   void initState() {
     super.initState();
     getEvents();
+    //_nameController.addListener(_onChangeHandler);
   }
+
+  _onChangeHandler(value ) {
+    const duration = Duration(milliseconds:800); // set the duration that you want call search() after that.
+    if (searchOnStoppedTyping != null) {
+      setState(() => searchOnStoppedTyping!.cancel()); // clear timer
+    }
+    setState(() => searchOnStoppedTyping = new Timer(duration, () => getEvents()));
+  }
+
 
   getEvents() async {
     setState(() {
@@ -66,9 +79,9 @@ class _ListEventsPageState extends State<ListEventsPage> {
     });
 
     if(_switchTypeEventValue){
-      await getPresentialEvent();
+      await getPresentialEvent(_nameController.text, _dropdownValueCategory);
     } else {
-      await getOnlineEvent();
+      await getOnlineEvent(_nameController.text, _dropdownValueCategory);
     }
 
     setState(() {
@@ -76,7 +89,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
     });
   }
 
-  getPresentialEvent() async {
+  getPresentialEvent(String? name, String? category) async {
     print('carregando getPresentialEvent');
 
     setState(() {
@@ -86,7 +99,13 @@ class _ListEventsPageState extends State<ListEventsPage> {
     final EventProvider _apiClient = EventProvider();
 
     try {
-      var eventListResponse = await _apiClient.listPresentialEvents();
+      if (category == 'Todas' || category == 'Categoria'){
+        category = null;
+      }
+      if(name == ''){
+        name = null;
+      }
+      var eventListResponse = await _apiClient.listPresentialEvents(name, category);
 
       setState(() {
         for (int i = 0; i < eventListResponse.length; i++) {
@@ -101,7 +120,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
     }
   }
 
-  getOnlineEvent() async {
+  getOnlineEvent(String? name, String? category) async {
     print('carregando getOnlineEvent');
     setState(() {
       eventList = [];
@@ -110,7 +129,13 @@ class _ListEventsPageState extends State<ListEventsPage> {
     final EventProvider _apiClient = EventProvider();
 
     try {
-      var eventListResponse = await _apiClient.listOnlineEvents();
+      if (category == 'Todas' || category == 'Categoria'){
+        category = null;
+      }
+      if(name == ''){
+        name = null;
+      }
+      var eventListResponse = await _apiClient.listOnlineEvents(name, category);
 
       setState(() {
         for (int i = 0; i < eventListResponse.length; i++) {
@@ -173,14 +198,36 @@ class _ListEventsPageState extends State<ListEventsPage> {
                           children: [
                             // Form Nome
                             Flexible(
-                              child: FormComponents.buildCustomSearchForm(
-                                _nameController,
-                                TextInputType.name,
-                                    (value) {
-                                  return null;
-                                },
-                                Mdi.magnify,
-                                'Pesquisar no Suche',
+                              child: Container(
+                                decoration: kBoxSearchDecorationStyle,
+                                height: 45.0,
+                                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 16),
+                                child: TextFormField(
+                                  controller: _nameController,
+                                  keyboardType: TextInputType.name,
+                                  onChanged: _onChangeHandler,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'OpenSans',
+                                  ),
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  cursorColor: Colors.white,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    prefixIcon: Icon(
+                                      Mdi.magnify,
+                                      color: Colors.white,
+                                    ),
+                                    prefixIconConstraints: BoxConstraints(minWidth: 0,),
+                                    prefixText: "   ", // espaçador
+                                    hintText: 'Pesquisar Evento',
+                                    hintStyle: kHintTextStyle,
+                                    errorStyle: kErrorTextStyle,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -224,6 +271,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
                                      onChanged: (String? newValue) {
                                        setState(() {
                                          _dropdownValueCategory = newValue;
+                                         getEvents();
                                        });
                                      },
                                      items: _categoryList

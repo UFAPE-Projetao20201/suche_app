@@ -60,7 +60,7 @@ class FormComponents {
   static Column buildCustomSearchForm(
       TextEditingController _controller, TextInputType _textInputType,
       String? Function(String?) _validator, IconData _icon, String _hintText,
-      {bool? obscureText, IconButton? suffixIconButton, List<TextInputFormatter>? listTextInputFormatter, bool? readOnly, void Function()? onTap,}) {
+      {bool? obscureText, IconButton? suffixIconButton, List<TextInputFormatter>? listTextInputFormatter, bool? readOnly, void Function()? onTap, void Function(String)? onChanged, }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

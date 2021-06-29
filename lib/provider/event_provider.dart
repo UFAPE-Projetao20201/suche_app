@@ -95,11 +95,19 @@ class EventProvider {
       throw error;
     }
   }
-  Future listPresentialEvents({String? email, String? password}) async {
+  Future listPresentialEvents(String? name, String? category, {String? email, String? password}) async {
     try {
+      Map body = {
+        "name": name,
+        "category": category,
+      };
+
+      print('busca prensencial: $name $category');
+      print(body);
       final httpResponse = await httpClient.request(
         url: '/eventpresential',
         method: 'get',
+        body: body,
       );
 
       return httpResponse;
@@ -108,11 +116,19 @@ class EventProvider {
       throw error;
     }
   }
-  Future listOnlineEvents({String? email, String? password}) async {
+  Future listOnlineEvents(String? name, String? category, {String? email, String? password}) async {
     try {
+      Map body = {
+        "name": name,
+        "category": category,
+      };
+
+      print('busca online: $name $category');
+      print(body);
       final httpResponse = await httpClient.request(
         url: '/eventonline',
         method: 'get',
+        body: body,
       );
 
       return httpResponse;
