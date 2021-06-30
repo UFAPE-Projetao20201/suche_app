@@ -74,9 +74,6 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             ListEventsPage(user: widget.user,),
             Container(
-              color: Colors.red,
-            ),
-            Container(
               color: Colors.green,
               child: Center(
                 child: Column(
