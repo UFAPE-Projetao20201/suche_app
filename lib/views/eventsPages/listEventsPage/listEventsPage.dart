@@ -31,6 +31,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
   List<Event> eventList = [];
   bool erro = false;
   bool loading = false;
+  bool imIn = false; //temporário enquanto não há requisção
   String? _dropdownValueCategory;
   Timer? searchOnStoppedTyping;
 
@@ -151,7 +152,12 @@ class _ListEventsPageState extends State<ListEventsPage> {
     });
   }
 
-  // listEvents
+  /*onChangedImIn(bool? imIn){
+    setState(() {
+      imIn = !imIn!;
+    });
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -343,7 +349,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
                           title: Column(
                             children: [
                               EventTileComponent.buildEventTileComponent(
-                                  eventList[index]),
+                                  eventList[index], imIn, ),
                               Divider(
                                 color: CustomColors.colorOrangeSecondary,
                               ),

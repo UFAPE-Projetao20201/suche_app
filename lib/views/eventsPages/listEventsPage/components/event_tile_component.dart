@@ -11,8 +11,8 @@ import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
 
 class EventTileComponent {
-
-  static buildEventTileComponent(Event event){
+  static buildEventTileComponent(Event event, bool imIn,
+      {Function(bool?)? onChangedImIn}) {
     return Container(
       constraints: BoxConstraints(
         maxHeight: double.infinity,
@@ -22,7 +22,6 @@ class EventTileComponent {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-
           // Nome do Evento
           Text(
             event.name,
@@ -42,30 +41,33 @@ class EventTileComponent {
                 fontFamily: 'OpenSans',
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,
-                fontStyle: FontStyle.italic
-            ),
+                fontStyle: FontStyle.italic),
           ),
           SizedBox(height: 5.0),
 
           //Promotor do evento
-          Row(
-              children: <Widget>[
-                Icon(
-                  Mdi.accountOutline,
-                  color: CustomColors.colorOrangeSecondary,
-                ),
-                SizedBox(width: 10.0,),
-                Text(
-                  event.promoter == null ? 'Não informado' : event.promoter!.name + ' ' + event.promoter!.surname, // NULLABLE ??
-                  style: TextStyle(
-                    color: CustomColors.colorOrangeSecondary,
-                    fontFamily: 'OpenSans',
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ]
-          ),
+          Row(children: <Widget>[
+            Icon(
+              Mdi.accountOutline,
+              color: CustomColors.colorOrangeSecondary,
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Text(
+              event.promoter == null
+                  ? 'Não informado'
+                  : event.promoter!.name +
+                      ' ' +
+                      event.promoter!.surname, // NULLABLE ??
+              style: TextStyle(
+                color: CustomColors.colorOrangeSecondary,
+                fontFamily: 'OpenSans',
+                fontSize: 15.0,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ]),
 
           //Data do evento
           Row(
@@ -90,24 +92,24 @@ class EventTileComponent {
           ),
 
           //Valor do evento
-          Row(
-              children: <Widget>[
-                Icon(
-                  Mdi.cash,
-                  color: CustomColors.colorOrangeSecondary,
-                ),
-                SizedBox(width: 10.0,),
-                Text(
-                  Util.toMoney(event.value),
-                  style: TextStyle(
-                    color: CustomColors.colorOrangeSecondary,
-                    fontFamily: 'OpenSans',
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-              ]
-          ),
+          Row(children: <Widget>[
+            Icon(
+              Mdi.cash,
+              color: CustomColors.colorOrangeSecondary,
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Text(
+              Util.toMoney(event.value),
+              style: TextStyle(
+                color: CustomColors.colorOrangeSecondary,
+                fontFamily: 'OpenSans',
+                fontSize: 15.0,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ]),
 
           //Local do evento (online/presencial)
           Visibility(
@@ -161,24 +163,66 @@ class EventTileComponent {
           ),
 
           //Categoria do evento
-          Row(
-              children: <Widget>[
-                Icon(
-                  Mdi.formatListChecks,
-                  color: CustomColors.colorOrangeSecondary,
-                ),
-                SizedBox(width: 10.0,),
-                Text(
-                  event.category,
-                  style: TextStyle(
-                    color: CustomColors.colorOrangeSecondary,
-                    fontFamily: 'OpenSans',
-                    fontSize: 15.0,
-                  ),
-                ),
-              ]
+          Row(children: <Widget>[
+            Icon(
+              Mdi.formatListChecks,
+              color: CustomColors.colorOrangeSecondary,
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Text(
+              event.category,
+              style: TextStyle(
+                color: CustomColors.colorOrangeSecondary,
+                fontFamily: 'OpenSans',
+                fontSize: 15.0,
+              ),
+            ),
+          ]),
+
+          const SizedBox(
+            height: 16,
           ),
 
+          Center(
+            child: Container(
+              // color: Colors.blue,
+              decoration: BoxDecoration(
+                color: Colors.white60,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 6.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 84),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Checkbox(
+                    value: imIn,
+                    onChanged:(_){},
+                  ),
+                  Flexible(
+                    child: Text(
+                      'Tô dentro  ',
+                      style: TextStyle(
+                          color: CustomColors.colorOrangeSecondary,
+                          fontFamily: 'OpenSans',
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
