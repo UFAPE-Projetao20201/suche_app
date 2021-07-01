@@ -17,22 +17,17 @@ class BottomNavigationComponent {
       items: [
         BottomNavyBarItem(
           icon: Icon(Mdi.compass),
-          title: Text('Home'),
+          title: Text('Descobrir'),
           activeColor: CustomColors.orangePrimary,
         ),
         BottomNavyBarItem(
-            icon: Icon(Mdi.trendingUp),
-            title: Text('Em alta'),
-            activeColor: CustomColors.orangePrimary,
-        ),
-        BottomNavyBarItem(
             icon: Icon(Mdi.partyPopper),
-            title: Text('Eventos'),
+            title: Text('Meus eventos',style: TextStyle(fontSize: 12),),
             activeColor: CustomColors.orangePrimary,
         ),
         BottomNavyBarItem(
             icon: Icon(Mdi.account),
-            title: Text('Perfil'),
+            title: Text('Conta'),
             activeColor: CustomColors.orangePrimary,
         ),
       ],
