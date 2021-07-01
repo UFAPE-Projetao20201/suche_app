@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
-import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/components/bottom_navigation_component.dart';
 import 'package:suche_app/views/eventsPages/listEventsPage/listEventsPage.dart';
 import 'package:suche_app/views/profilePage/profile_page.dart';

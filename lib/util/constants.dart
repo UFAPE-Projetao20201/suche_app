@@ -40,3 +40,15 @@ final kBoxDecorationStyle = BoxDecoration(
     ),
   ],
 );
+
+final kBoxSearchDecorationStyle = BoxDecoration(
+  color: CustomColors.orangePrimary.shade400,
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 6.0,
+      offset: Offset(0, 2),
+    ),
+  ],
+);

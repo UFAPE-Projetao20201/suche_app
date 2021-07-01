@@ -1,12 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 // Package imports:
+import 'package:intl/intl.dart';
 import 'package:mdi/mdi.dart';
-import 'package:suche_app/model/event.dart';
 
 // Project imports:
+import 'package:suche_app/model/event.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
 

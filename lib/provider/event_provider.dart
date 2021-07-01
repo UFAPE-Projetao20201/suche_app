@@ -1,10 +1,7 @@
-import 'dart:convert';
-
+// Package imports:
 import 'package:http/http.dart';
-import 'package:suche_app/model/event.dart';
-import 'package:suche_app/model/user.dart';
-import 'package:suche_app/services/storage.dart';
 
+// Project imports:
 import '../http/index.dart';
 
 class EventProvider {
@@ -95,12 +92,19 @@ class EventProvider {
       throw error;
     }
   }
-  Future listPresentialEvents({String? email, String? password}) async {
+  Future listPresentialEvents(String? name, String? category, {String? email, String? password}) async {
     try {
+      final queryParameters = {
+        'name': name,
+        'category': category,
+      };
+
       final httpResponse = await httpClient.request(
         url: '/eventpresential',
         method: 'get',
+        queryParams: queryParameters,
       );
+
 
       return httpResponse;
     } catch (error) {
@@ -108,11 +112,17 @@ class EventProvider {
       throw error;
     }
   }
-  Future listOnlineEvents({String? email, String? password}) async {
+  Future listOnlineEvents(String? name, String? category, {String? email, String? password}) async {
     try {
+      final queryParameters = {
+        'name': name,
+        'category': category,
+      };
+
       final httpResponse = await httpClient.request(
         url: '/eventonline',
         method: 'get',
+        queryParams: queryParameters,
       );
 
       return httpResponse;
