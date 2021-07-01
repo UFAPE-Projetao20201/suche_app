@@ -1,17 +1,18 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:mdi/mdi.dart';
+
+// Project imports:
 import 'package:suche_app/model/event.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/event_provider.dart';
 import 'package:suche_app/util/constants.dart';
-
-// Project imports:
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/components/form_components.dart';
 import 'package:suche_app/views/eventsPages/listEventsPage/components/event_tile_component.dart';
@@ -61,13 +62,12 @@ class _ListEventsPageState extends State<ListEventsPage> {
   void initState() {
     super.initState();
     getEvents();
-    //_nameController.addListener(_onChangeHandler);
   }
 
   _onChangeHandler(value ) {
-    const duration = Duration(milliseconds:800); // set the duration that you want call search() after that.
+    const duration = Duration(milliseconds:2000);
     if (searchOnStoppedTyping != null) {
-      setState(() => searchOnStoppedTyping!.cancel()); // clear timer
+      setState(() => searchOnStoppedTyping!.cancel());
     }
     setState(() => searchOnStoppedTyping = new Timer(duration, () => getEvents()));
   }
@@ -90,7 +90,6 @@ class _ListEventsPageState extends State<ListEventsPage> {
   }
 
   getPresentialEvent(String? name, String? category) async {
-    print('carregando getPresentialEvent');
 
     setState(() {
       eventList = [];
@@ -113,15 +112,12 @@ class _ListEventsPageState extends State<ListEventsPage> {
           eventList.add(event);
         }
       });
-      print(eventList.isEmpty);
-      print(eventList.length);
     } on Exception catch (e) {
       print('excecao -> ' + e.toString());
     }
   }
 
   getOnlineEvent(String? name, String? category) async {
-    print('carregando getOnlineEvent');
     setState(() {
       eventList = [];
     });
@@ -143,8 +139,6 @@ class _ListEventsPageState extends State<ListEventsPage> {
           eventList.add(event);
         }
       });
-      print(eventList.isEmpty);
-      print(eventList.length);
     } on Exception catch (e) {
       print('excecao -> ' + e.toString());
     }
@@ -157,9 +151,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
     });
   }
 
-
   // listEvents
-
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -172,16 +164,6 @@ class _ListEventsPageState extends State<ListEventsPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              /*SizedBox(height: 20.0),
-              Text(
-                'Eventos',
-                style: TextStyle(
-                  color: CustomColors.orangePrimary.shade400,
-                  fontFamily: 'OpenSans',
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),*/
               SizedBox(height: 5.0),
               SafeArea(
                 child: SingleChildScrollView(
@@ -304,7 +286,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
                                showOnOff: true,
                                toggleColor: CustomColors.colorLightGray,//
                                activeColor: CustomColors.orangePrimary.shade400,
-                               activeText: "Prensencial",
+                               activeText: "Presencial",
                                activeTextColor: CustomColors.colorLightGray,//
                                activeTextFontWeight: FontWeight.w900 ,
                                inactiveColor: CustomColors.orangePrimary.shade400,
@@ -326,7 +308,6 @@ class _ListEventsPageState extends State<ListEventsPage> {
                   ),
                 ),
               ),
-              //SizedBox(height: 20.0),
               Divider(
                 color: CustomColors.colorOrangeSecondary,
               ),

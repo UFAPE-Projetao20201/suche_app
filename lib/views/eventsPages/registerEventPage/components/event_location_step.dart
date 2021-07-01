@@ -5,12 +5,12 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:mdi/mdi.dart';
+import 'package:validators/validators.dart';
 
 // Project imports:
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
 import 'package:suche_app/views/components/form_components.dart';
-import 'package:validators/validators.dart';
 
 class EventLocationStep{
 
