@@ -134,6 +134,42 @@ class EventProvider {
       throw error;
     }
   }
+  Future listConfirmedEvents(String? email) async {
+    try {
+      final queryParameters = {
+        'email': email,
+      };
+
+      final httpResponse = await httpClient.request(
+        url: '/confirmedevents',
+        method: 'get',
+        queryParams: queryParameters,
+      );
+
+      return httpResponse;
+    } catch (error) {
+      print("getEvents error - " + error.toString());
+      throw error;
+    }
+  }
+  Future listPastEvents(String? email) async {
+    try {
+      final queryParameters = {
+        'email': email,
+      };
+
+      final httpResponse = await httpClient.request(
+        url: '/pastevents',
+        method: 'get',
+        queryParams: queryParameters,
+      );
+
+      return httpResponse;
+    } catch (error) {
+      print("getEvents error - " + error.toString());
+      throw error;
+    }
+  }
 
   Future confirmPresence(String eventId, String email, String token) async {
     try {

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:mdi/mdi.dart';
 
 // Project imports:
 import 'package:suche_app/model/user.dart';
@@ -7,6 +8,7 @@ import 'package:suche_app/services/storage.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/views/components/bottom_navigation_component.dart';
 import 'package:suche_app/views/eventsPages/listEventsPage/listEventsPage.dart';
+import 'package:suche_app/views/eventsPages/listMyEventsPage/listMyEventsPage.dart';
 import 'package:suche_app/views/profilePage/profile_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -72,31 +74,11 @@ class _HomePageState extends State<HomePage> {
           },
           children: <Widget>[
             ListEventsPage(user: widget.user,),
-            Container(
-              color: Colors.green,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Visibility(
-                      visible: widget.user.isPromoter,
-                      child: TextButton(
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed(registerEventRoute, arguments: widget.user),
-                        child: Text(
-                          'Cadastrar Evento',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            ProfilePage(
-              user: widget.user,
-            ),
-            // Container(color: Colors.blue,),
+
+            ListMyEventsPage(user: widget.user,),
+
+            ProfilePage(user: widget.user,),
+
           ],
         ),
       ),
