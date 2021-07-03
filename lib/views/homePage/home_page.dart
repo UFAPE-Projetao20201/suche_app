@@ -82,22 +82,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-
-      floatingActionButton: Visibility(
-        visible: widget.user.isPromoter && _currentIndex == 1,
-        child: FloatingActionButton.extended(
-            onPressed: () => Navigator.of(context).pushNamed(registerEventRoute, arguments: widget.user),
-            label: const Text(
-              "Criar Evento",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
-                fontSize: 18,
-              ),
-            ),
-            icon: const Icon(Mdi.plus),
-        )
-      )
     );
   }
 }
