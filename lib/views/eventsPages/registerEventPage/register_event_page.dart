@@ -116,7 +116,6 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
                       if (_indexStepper <= 0) {
                         if(_formKey1.currentState!.validate() && _dropdownValueType == 'Presencial'){
                           setState(() {
-                            print("Entrou");
                             _indexStepper += 1;
                           });
                         //Cadastrando evento online

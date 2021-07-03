@@ -3,6 +3,7 @@ import 'package:suche_app/model/localization.dart';
 import 'package:suche_app/model/user.dart';
 
 class Event {
+  final String id;
   final User? promoter; //NULLABLE ??
   final String name;
   final String description;
@@ -16,6 +17,7 @@ class Event {
   final Localization? localization; //NULLABLE ??
 
   Event({
+    required this.id,
     required this.promoter,
     required this.name,
     required this.description,
@@ -30,8 +32,8 @@ class Event {
   });
 
   factory Event.fromJson(Map<String, dynamic> json) {
-    print(json['promoter']);
     return Event(
+      id:  json['_id'] as String,
       promoter: json['promoter'] != null ? User.fromJson(json['promoter'], fromRequisition: 'event') : null,
       name: json['name'] as String,
       description: json['description'] as String,
@@ -48,6 +50,6 @@ class Event {
 
   @override
   String toString() {
-    return 'Event{ name: $name, description: $description, category: $category, value: $value, date: $date, keywords: $keywords, link: $link, isOnline: $isOnline, isLocal: $isLocal}';
+    return 'Event{id: $id, promoter: $promoter, name: $name, description: $description, category: $category, value: $value, date: $date, keywords: $keywords, link: $link, isOnline: $isOnline, isLocal: $isLocal, localization: $localization}';
   }
 }

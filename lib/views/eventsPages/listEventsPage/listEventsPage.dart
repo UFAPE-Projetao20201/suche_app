@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:developer';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:mdi/mdi.dart';
 
 // Project imports:
 import 'package:suche_app/model/event.dart';
+import 'package:suche_app/model/event_im_in.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/event_provider.dart';
 import 'package:suche_app/util/constants.dart';
@@ -28,10 +30,9 @@ class ListEventsPage extends StatefulWidget {
 
 class _ListEventsPageState extends State<ListEventsPage> {
   bool _switchTypeEventValue = true;
-  List<Event> eventList = [];
+  List<EventImIn> eventList = [];
   bool erro = false;
   bool loading = false;
-  bool imIn = false; //temporário enquanto não há requisção
   String? _dropdownValueCategory;
   Timer? searchOnStoppedTyping;
 
@@ -105,11 +106,11 @@ class _ListEventsPageState extends State<ListEventsPage> {
       if(name == ''){
         name = null;
       }
-      var eventListResponse = await _apiClient.listPresentialEvents(name, category);
+      var eventListResponse = await _apiClient.listPresentialEvents(name, category, widget.user.email);
 
       setState(() {
         for (int i = 0; i < eventListResponse.length; i++) {
-          Event event = Event.fromJson(eventListResponse[i]);
+          EventImIn event = EventImIn.fromJson(eventListResponse[i]);
           eventList.add(event);
         }
       });
@@ -132,14 +133,16 @@ class _ListEventsPageState extends State<ListEventsPage> {
       if(name == ''){
         name = null;
       }
-      var eventListResponse = await _apiClient.listOnlineEvents(name, category);
+      var eventListResponse = await _apiClient.listOnlineEvents(name, category, widget.user.email);
 
       setState(() {
         for (int i = 0; i < eventListResponse.length; i++) {
-          Event event = Event.fromJson(eventListResponse[i]);
+          EventImIn event = EventImIn.fromJson(eventListResponse[i]);
           eventList.add(event);
         }
       });
+
+      log(eventListResponse.toString());
     } on Exception catch (e) {
       print('excecao -> ' + e.toString());
     }
@@ -348,8 +351,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
                         return ListTile(
                           title: Column(
                             children: [
-                              EventTileComponent.buildEventTileComponent(
-                                  eventList[index], imIn, ),
+                              EventTileComponent(eventImIn: eventList[index], user: widget.user,),
                               Divider(
                                 color: CustomColors.colorOrangeSecondary,
                               ),

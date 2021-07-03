@@ -92,11 +92,12 @@ class EventProvider {
       throw error;
     }
   }
-  Future listPresentialEvents(String? name, String? category, {String? email, String? password}) async {
+  Future listPresentialEvents(String? name, String? category, String email) async {
     try {
       final queryParameters = {
         'name': name,
         'category': category,
+        'email': email,
       };
 
       final httpResponse = await httpClient.request(
@@ -112,11 +113,13 @@ class EventProvider {
       throw error;
     }
   }
-  Future listOnlineEvents(String? name, String? category, {String? email, String? password}) async {
+
+  Future listOnlineEvents(String? name, String? category, String email) async {
     try {
       final queryParameters = {
         'name': name,
         'category': category,
+        'email': email,
       };
 
       final httpResponse = await httpClient.request(
@@ -131,4 +134,60 @@ class EventProvider {
       throw error;
     }
   }
+
+  Future confirmPresence(String eventId, String email, String token) async {
+    try {
+      final body = {
+        'email': email,
+        'eventID': eventId,
+      };
+
+      Map headers = {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': 'Bearer '+token,
+      };
+
+      final httpResponse = await httpClient.request(
+        url: '/confirm',
+        method: 'post',
+        body: body,
+        headers: headers,
+      );
+
+      return httpResponse;
+    } catch (error) {
+      print("getEvents error - " + error.toString());
+      throw error;
+    }
+  }
+
+  Future unconfirmPresence(String eventId, String email, String token) async {
+    try {
+      final body = {
+        'email': email,
+        'eventID': eventId,
+      };
+
+      Map headers = {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': 'Bearer '+token,
+      };
+
+      final httpResponse = await httpClient.request(
+        url: '/unconfirm',
+        method: 'post',
+        body: body,
+        headers: headers,
+      );
+
+      return httpResponse;
+    } catch (error) {
+      print("getEvents error - " + error.toString());
+      throw error;
+    }
+  }
+
+
 }

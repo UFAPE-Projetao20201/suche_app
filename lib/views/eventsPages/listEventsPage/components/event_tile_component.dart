@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:intl/intl.dart';
@@ -7,12 +8,30 @@ import 'package:mdi/mdi.dart';
 
 // Project imports:
 import 'package:suche_app/model/event.dart';
+import 'package:suche_app/model/event_im_in.dart';
+import 'package:suche_app/model/user.dart';
+import 'package:suche_app/provider/event_provider.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
 
-class EventTileComponent {
-  static buildEventTileComponent(Event event, bool imIn,
-      {Function(bool?)? onChangedImIn}) {
+class EventTileComponent extends StatefulWidget {
+  final EventImIn eventImIn;
+  final User user;
+
+  const EventTileComponent(
+      {Key? key, required this.eventImIn, required this.user})
+      : super(key: key);
+
+  @override
+  _EventTileComponentState createState() => _EventTileComponentState();
+}
+
+class _EventTileComponentState extends State<EventTileComponent> {
+  bool loading = false;
+  bool _absorbing = false;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
         maxHeight: double.infinity,
@@ -24,7 +43,7 @@ class EventTileComponent {
         children: <Widget>[
           // Nome do Evento
           Text(
-            event.name,
+            widget.eventImIn.event!.name,
             style: TextStyle(
               color: CustomColors.orangePrimary.shade400,
               fontFamily: 'OpenSans',
@@ -35,7 +54,7 @@ class EventTileComponent {
 
           // Descrição do evento
           Text(
-            event.description,
+            widget.eventImIn.event!.description,
             style: TextStyle(
                 color: CustomColors.colorOrangeSecondary,
                 fontFamily: 'OpenSans',
@@ -55,11 +74,11 @@ class EventTileComponent {
               width: 10.0,
             ),
             Text(
-              event.promoter == null
+              widget.eventImIn.event!.promoter == null
                   ? 'Não informado'
-                  : event.promoter!.name +
+                  : widget.eventImIn.event!.promoter!.name +
                       ' ' +
-                      event.promoter!.surname, // NULLABLE ??
+                      widget.eventImIn.event!.promoter!.surname, // NULLABLE ??
               style: TextStyle(
                 color: CustomColors.colorOrangeSecondary,
                 fontFamily: 'OpenSans',
@@ -80,7 +99,8 @@ class EventTileComponent {
                 width: 10.0,
               ),
               Text(
-                DateFormat('dd/MM/yyyy – HH:mm').format(event.date),
+                DateFormat('dd/MM/yyyy – HH:mm')
+                    .format(widget.eventImIn.event!.date),
                 style: TextStyle(
                   color: CustomColors.colorOrangeSecondary,
                   fontFamily: 'OpenSans',
@@ -101,7 +121,7 @@ class EventTileComponent {
               width: 10.0,
             ),
             Text(
-              Util.toMoney(event.value),
+              Util.toMoney(widget.eventImIn.event!.value),
               style: TextStyle(
                 color: CustomColors.colorOrangeSecondary,
                 fontFamily: 'OpenSans',
@@ -113,7 +133,7 @@ class EventTileComponent {
 
           //Local do evento (online/presencial)
           Visibility(
-            visible: event.localization != null,
+            visible: widget.eventImIn.event!.localization != null,
             child: Row(children: <Widget>[
               Icon(
                 Mdi.mapMarker,
@@ -124,13 +144,15 @@ class EventTileComponent {
               ),
               Flexible(
                 child: Text(
-                  event.localization == null
+                  widget.eventImIn.event!.localization == null
                       ? 'Não informado'
-                      : event.localization!.street +
+                      : widget.eventImIn.event!.localization!.street +
                           ', Nº ' +
-                          event.localization!.number.toString() +
+                          widget.eventImIn.event!.localization!.number
+                              .toString() +
                           ' - ' +
-                          event.localization!.city, // NULLABLE ??
+                          widget.eventImIn.event!.localization!
+                              .city, // NULLABLE ??
                   style: TextStyle(
                     color: CustomColors.colorOrangeSecondary,
                     fontFamily: 'OpenSans',
@@ -150,7 +172,7 @@ class EventTileComponent {
               ),
               Flexible(
                 child: Text(
-                  event.link, // NULLABLE ??
+                  widget.eventImIn.event!.link, // NULLABLE ??
                   style: TextStyle(
                     color: CustomColors.colorOrangeSecondary,
                     fontFamily: 'OpenSans',
@@ -172,7 +194,7 @@ class EventTileComponent {
               width: 10.0,
             ),
             Text(
-              event.category,
+              widget.eventImIn.event!.category,
               style: TextStyle(
                 color: CustomColors.colorOrangeSecondary,
                 fontFamily: 'OpenSans',
@@ -200,26 +222,82 @@ class EventTileComponent {
                 ],
               ),
               margin: EdgeInsets.symmetric(horizontal: 84),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Checkbox(
-                    value: imIn,
-                    onChanged:(_){},
+              child: AbsorbPointer(
+                absorbing: _absorbing,
+                child: AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: SystemUiOverlayStyle.light,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Visibility(
+                        visible: !_absorbing,
+                        replacement: Container(child: CircularProgressIndicator(strokeWidth: 2,), width: 22, height: 22, margin: EdgeInsets.all(13),),
+                        child: Checkbox(
+                          value: widget.eventImIn.imIn,
+                          onChanged: (value) async {
+                            if (!value!) {
+                              setState(() {
+                                loading = true;
+                                _absorbing = true;
+                              });
+
+                              final EventProvider _apiClient = EventProvider();
+
+                              await _apiClient.unconfirmPresence(
+                                  widget.eventImIn.event!.id,
+                                  widget.user.email,
+                                  widget.user.token);
+
+                              widget.eventImIn.imIn = !widget.eventImIn.imIn;
+
+                              setState(() {
+                                loading = false;
+                                _absorbing = false;
+                              });
+                            } else {
+                              setState(() {
+                                loading = true;
+                                _absorbing = true;
+                              });
+
+                              final EventProvider _apiClient = EventProvider();
+
+                              await _apiClient.confirmPresence(
+                                  widget.eventImIn.event!.id,
+                                  widget.user.email,
+                                  widget.user.token);
+
+                              widget.eventImIn.imIn = !widget.eventImIn.imIn;
+
+                              setState(() {
+                                loading = false;
+                                _absorbing = false;
+                              });
+                            }
+
+                            /*setState(() {
+                            print('antes: ' + widget.eventImIn.toString());
+                            widget.eventImIn.imIn = !widget.eventImIn.imIn;
+                            print('dps: ' + widget.eventImIn.toString());
+                          });*/
+                          },
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          'Tô dentro  ',
+                          style: TextStyle(
+                              color: CustomColors.colorOrangeSecondary,
+                              fontFamily: 'OpenSans',
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
-                  Flexible(
-                    child: Text(
-                      'Tô dentro  ',
-                      style: TextStyle(
-                          color: CustomColors.colorOrangeSecondary,
-                          fontFamily: 'OpenSans',
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
