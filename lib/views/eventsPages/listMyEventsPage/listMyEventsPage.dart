@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:suche_app/model/event.dart';
 import 'package:suche_app/model/user.dart';
+import 'package:suche_app/provider/event_provider.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/eventsPages/listEventsPage/components/event_tile_component.dart';
 
@@ -17,10 +18,93 @@ class ListMyEventsPage extends StatefulWidget {
 class _ListMyEventsPageState extends State<ListMyEventsPage> {
   bool erro = false;
   bool loading = false;
-  var isSelected = [true, false];
+  var isSelected = [true, false]; //index 0 para participante e index 1 para promotor
   bool imIn = false; //temporário enquanto não há requisção
-  bool _switchTypeEventValue = true;
+  bool _switchTypeEventValue = true; // true é referente a eventos futuros
   List<Event> eventList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getEvents();
+  }
+
+  getEvents() async {
+    setState(() {
+      loading = true;
+    });
+
+    //Verifica se é participante
+    if(isSelected[0] == true){
+      //Verifica se quer ver os eventos que confirmou presença
+      if(_switchTypeEventValue){
+        await getConfirmedEvents();
+      }
+      //Verifica se quer ver os eventos que já participou no passado
+      else{
+        await getPastEvents();
+      }
+    }
+    //Caso seja promotor
+    else if(isSelected[1] == true){
+      //Verifica se quer ver os eventos futuros cadastrado pelo promotor
+      if(_switchTypeEventValue){
+        //await getFutureEventsPromoter();
+      }
+      //Verifica se quer ver os eventos cadastrado pelo promotor que já aconteceram
+      else{
+        //await getPastEventsPromoter();
+      }
+    }
+
+    setState(() {
+      loading = false;
+    });
+  }
+
+  getConfirmedEvents() async {
+    setState(() {
+      eventList = [];
+    });
+
+    final EventProvider _apiClient = EventProvider();
+
+    try {
+
+      var eventListResponse = await _apiClient.listConfirmedEvents(widget.user.email);
+
+      setState(() {
+        for (int i = 0; i < eventListResponse.length; i++) {
+          Event event = Event.fromJson(eventListResponse[i]);
+          eventList.add(event);
+        }
+      });
+    }on Exception catch (e) {
+      print('excecao -> ' + e.toString());
+    }
+  }
+
+  getPastEvents() async {
+    setState(() {
+      eventList = [];
+    });
+
+    final EventProvider _apiClient = EventProvider();
+
+    try {
+
+      var eventListResponse = await _apiClient.listPastEvents(widget.user.email);
+
+      setState(() {
+        for (int i = 0; i < eventListResponse.length; i++) {
+          Event event = Event.fromJson(eventListResponse[i]);
+          eventList.add(event);
+        }
+      });
+    }on Exception catch (e) {
+      print('excecao -> ' + e.toString());
+    }
+  }
 
 
   error() {
@@ -73,7 +157,7 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
                       }
                     }
                     print("Participante / Promotor $isSelected");
-                    // Chamar função para listar aqui
+                    getEvents();
                   });
                 },
                 isSelected: isSelected,
@@ -111,8 +195,8 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
               onToggle: (val) {
                 setState(() {
                   _switchTypeEventValue = !_switchTypeEventValue;
-                  print("Mudou switch");
-                  // Chamar função para listar aqui
+                  print("Mudou switch: $_switchTypeEventValue");
+                  getEvents();
                 });
               },
             ),
