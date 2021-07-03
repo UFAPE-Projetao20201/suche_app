@@ -7,6 +7,7 @@ import 'package:suche_app/provider/event_provider.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/eventsPages/listEventsPage/components/event_tile_component.dart';
+import 'package:suche_app/views/eventsPages/listMyEventsPage/components/event_tile_comum_component.dart';
 
 class ListMyEventsPage extends StatefulWidget {
   final User user;
@@ -237,8 +238,7 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
                         return ListTile(
                           title: Column(
                             children: [
-                              EventTileComponent.buildEventTileComponent(
-                                eventList[index], imIn, ),
+                              EventTileComumComponent(event: eventList[index], user: widget.user),
                               Divider(
                                 color: CustomColors.colorOrangeSecondary,
                               ),
