@@ -1,12 +1,16 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:mdi/mdi.dart';
+
+// Project imports:
 import 'package:suche_app/model/event.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/event_provider.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
-import 'package:suche_app/views/eventsPages/listEventsPage/components/event_tile_component.dart';
 import 'package:suche_app/views/eventsPages/listMyEventsPage/components/event_tile_comum_component.dart';
 
 class ListMyEventsPage extends StatefulWidget {

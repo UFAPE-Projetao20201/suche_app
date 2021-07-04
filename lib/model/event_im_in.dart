@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:suche_app/model/event.dart';
 
 class EventImIn {
