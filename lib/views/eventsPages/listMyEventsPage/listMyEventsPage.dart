@@ -56,11 +56,11 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
     else if(isSelected[0] == true){
       //Verifica se quer ver os eventos futuros cadastrado pelo promotor
       if(_switchTypeEventValue){
-        //await getFutureEventsPromoter();
+        await getFutureEventsPromoter();
       }
       //Verifica se quer ver os eventos cadastrado pelo promotor que já aconteceram
       else{
-        //await getPastEventsPromoter();
+        await getPastEventsPromoter();
       }
     }
 
@@ -111,6 +111,18 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
     }on Exception catch (e) {
       print('excecao -> ' + e.toString());
     }
+  }
+
+  getFutureEventsPromoter(){
+    setState(() {
+      eventList = [];
+    });
+  }
+
+  getPastEventsPromoter(){
+    setState(() {
+      eventList = [];
+    });
   }
 
   error() {
