@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:mdi/mdi.dart';
 
 // Project imports:
-import 'package:suche_app/model/event.dart';
 import 'package:suche_app/model/event_im_in.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/event_provider.dart';

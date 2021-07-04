@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:mdi/mdi.dart';
 
 // Project imports:
 import 'package:suche_app/model/user.dart';

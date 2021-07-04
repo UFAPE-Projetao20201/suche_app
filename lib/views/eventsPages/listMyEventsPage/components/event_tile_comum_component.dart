@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:intl/intl.dart';
@@ -8,9 +7,7 @@ import 'package:mdi/mdi.dart';
 
 // Project imports:
 import 'package:suche_app/model/event.dart';
-import 'package:suche_app/model/event_im_in.dart';
 import 'package:suche_app/model/user.dart';
-import 'package:suche_app/provider/event_provider.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
 
@@ -28,7 +25,6 @@ class EventTileComumComponent extends StatefulWidget {
 
 class _EventTileComumComponentState extends State<EventTileComumComponent> {
   bool loading = false;
-  bool _absorbing = false;
 
   @override
   Widget build(BuildContext context) {
