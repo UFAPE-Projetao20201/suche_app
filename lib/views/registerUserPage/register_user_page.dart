@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:mdi/mdi.dart';
+import 'package:suche_app/http/http_error.dart';
 import 'package:validators/validators.dart';
 
 // Project imports:
@@ -313,7 +314,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                                       ),
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
-                                          // try {
+                                           try {
                                             // Desabilita a tela para não receber toques
                                             setState(() {
                                               _absorbing = true;
@@ -359,7 +360,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                                               (route) => false,
                                               arguments: user,
                                             );
-                                          /*} catch (erro) {
+                                          } catch (erro) {
 
                                             // Re-habilita a tela para receber toques
                                             setState(() {
@@ -379,7 +380,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
-                                                  content: Text('Ocorreu um erro! (400)'),
+                                                  content: Text('Email ou Telefone já existem no sistema! (400)'),
                                                   backgroundColor: Colors.red,
                                                 ),
                                               );
@@ -392,7 +393,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                                                 ),
                                               );
                                             }
-                                          }*/
+                                          }
                                         }
                                       },
                                       child: Text(
