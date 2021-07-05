@@ -274,6 +274,7 @@ class _LoginPageState extends State<LoginPage> {
                               onTap: () =>
                                   Navigator.of(context).pushNamed(registerUserRoute),
                               child: RichText(
+                                key: Key("cadastre-se"),
                                 text: TextSpan(
                                   children: [
                                     TextSpan(

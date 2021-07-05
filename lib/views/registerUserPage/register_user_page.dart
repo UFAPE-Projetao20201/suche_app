@@ -75,6 +75,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                   child: Center(
                     child: SafeArea(
                       child: SingleChildScrollView(
+                        key: Key('ScrollCadastro'),
                         physics: AlwaysScrollableScrollPhysics(),
                         padding: EdgeInsets.symmetric(
                           horizontal: 40.0,
@@ -177,6 +178,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                                     _phoneController,
                                     Center(
                                       child: DropdownButtonFormField<String>(
+                                        key: Key("dropgenero"),
                                         value: _dropdownValueSexo,
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {

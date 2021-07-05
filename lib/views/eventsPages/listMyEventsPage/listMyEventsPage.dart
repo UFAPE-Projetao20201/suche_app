@@ -273,6 +273,7 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
         floatingActionButton: Visibility(
             visible: widget.user.isPromoter && isSelected[0] == true,
             child: FloatingActionButton.extended(
+              key: Key("ButtonCadastro"),
               onPressed: () => Navigator.of(context).pushNamed(registerEventRoute, arguments: widget.user),
               label: const Text(
                 "Criar Evento",
