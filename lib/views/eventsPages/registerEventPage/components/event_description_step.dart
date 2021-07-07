@@ -39,6 +39,7 @@ class EventDescriptionStep{
     return Container(
       color: CustomColors.orangePrimary.shade400,
       child: SingleChildScrollView(
+        key:Key('ScrollCadastroEvento'),
         physics: AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.symmetric(
           horizontal: 10.0,
@@ -96,6 +97,7 @@ class EventDescriptionStep{
                     _categoryController,
                     Center(
                       child: DropdownButtonFormField<String>(
+                        key: Key("dropcategoriacadastro"),
                         value: _dropdownValueCategory,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -231,6 +233,7 @@ class EventDescriptionStep{
                     _typeController,
                     Center(
                       child: DropdownButtonFormField<String>(
+                        key: Key("tipoevento"),
                         value: _dropdownValueType,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
