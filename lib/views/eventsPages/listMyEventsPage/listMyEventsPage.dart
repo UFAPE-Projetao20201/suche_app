@@ -32,6 +32,9 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
 
   @override
   void initState() {
+    if(!widget.user.isPromoter){
+      isSelected = [false, true]; //index 0 para promotor e index 1 para participante
+    }
     super.initState();
     getEvents();
   }
@@ -40,7 +43,6 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
     setState(() {
       loading = true;
     });
-
     //Verifica se é participante
     if(isSelected[1] == true){
       //Verifica se quer ver os eventos que confirmou presença
