@@ -113,16 +113,48 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
     }
   }
 
-  getFutureEventsPromoter(){
+  getFutureEventsPromoter() async {
     setState(() {
       eventList = [];
     });
+
+    final EventProvider _apiClient = EventProvider();
+
+    try {
+
+      var eventListResponse = await _apiClient.listFutureEventsPromoter(widget.user.email);
+
+      setState(() {
+        for (int i = 0; i < eventListResponse.length; i++) {
+          Event event = Event.fromJson(eventListResponse[i]);
+          eventList.add(event);
+        }
+      });
+    }on Exception catch (e) {
+      print('excecao -> ' + e.toString());
+    }
   }
 
-  getPastEventsPromoter(){
+  getPastEventsPromoter() async {
     setState(() {
       eventList = [];
     });
+
+    final EventProvider _apiClient = EventProvider();
+
+    try {
+
+      var eventListResponse = await _apiClient.listPastEventsPromoter(widget.user.email);
+
+      setState(() {
+        for (int i = 0; i < eventListResponse.length; i++) {
+          Event event = Event.fromJson(eventListResponse[i]);
+          eventList.add(event);
+        }
+      });
+    }on Exception catch (e) {
+      print('excecao -> ' + e.toString());
+    }
   }
 
   error() {
