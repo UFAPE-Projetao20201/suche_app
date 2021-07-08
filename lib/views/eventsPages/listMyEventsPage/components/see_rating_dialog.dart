@@ -76,7 +76,6 @@ class _CustomDialogBoxState extends State<SeeRatingDialog> {
             ],
           ),
           child: FutureBuilder(
-            future: loadRating(),
             builder: (context, snapshot){
               return Column(
                 mainAxisSize: MainAxisSize.min,
