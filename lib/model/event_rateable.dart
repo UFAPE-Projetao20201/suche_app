@@ -27,6 +27,6 @@ class EventRateable {
 
   @override
   String toString() {
-    return 'EventImIn{_rated: $_rated, _event: {...}}}';
+    return 'EventRateable{_rated: $_rated, _event: {...}}}';
   }
 }

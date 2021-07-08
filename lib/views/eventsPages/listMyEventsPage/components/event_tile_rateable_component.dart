@@ -4,19 +4,22 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:intl/intl.dart';
 import 'package:mdi/mdi.dart';
-import 'package:suche_app/model/EventRateable.dart';
+import 'package:suche_app/model/event_rateable.dart';
+import 'package:suche_app/model/rate.dart';
 
 // Project imports:
 import 'package:suche_app/model/user.dart';
+import 'package:suche_app/provider/rate_provider.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
+import 'package:suche_app/views/eventsPages/listMyEventsPage/components/see_rating_dialog.dart';
 
 class EventTileRateableComponent extends StatefulWidget {
-  final EventRateable event;
+  final EventRateable eventRateable;
   final User user;
 
   const EventTileRateableComponent(
-      {Key? key, required this.event, required this.user})
+      {Key? key, required this.eventRateable, required this.user})
       : super(key: key);
 
   @override
@@ -39,7 +42,7 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
         children: <Widget>[
           // Nome do Evento
           Text(
-            widget.event.event!.name,
+            widget.eventRateable.event!.name,
             style: TextStyle(
               color: CustomColors.orangePrimary.shade400,
               fontFamily: 'OpenSans',
@@ -50,7 +53,7 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
 
           // Descrição do evento
           Text(
-            widget.event.event!.description,
+            widget.eventRateable.event!.description,
             style: TextStyle(
                 color: CustomColors.colorOrangeSecondary,
                 fontFamily: 'OpenSans',
@@ -70,11 +73,11 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
               width: 10.0,
             ),
             Text(
-              widget.event.event!.promoter == null
+              widget.eventRateable.event!.promoter == null
                   ? 'Não informado'
-                  : widget.event.event!.promoter!.name +
+                  : widget.eventRateable.event!.promoter!.name +
                       ' ' +
-                      widget.event.event!.promoter!.surname, // NULLABLE ??
+                      widget.eventRateable.event!.promoter!.surname, // NULLABLE ??
               style: TextStyle(
                 color: CustomColors.colorOrangeSecondary,
                 fontFamily: 'OpenSans',
@@ -96,7 +99,7 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
               ),
               Text(
                 DateFormat('dd/MM/yyyy – HH:mm')
-                    .format(widget.event.event!.date),
+                    .format(widget.eventRateable.event!.date),
                 style: TextStyle(
                   color: CustomColors.colorOrangeSecondary,
                   fontFamily: 'OpenSans',
@@ -117,7 +120,7 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
               width: 10.0,
             ),
             Text(
-              Util.toMoney(widget.event.event!.value),
+              Util.toMoney(widget.eventRateable.event!.value),
               style: TextStyle(
                 color: CustomColors.colorOrangeSecondary,
                 fontFamily: 'OpenSans',
@@ -129,7 +132,7 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
 
           //Local do evento (online/presencial)
           Visibility(
-            visible: widget.event.event!.localization != null,
+            visible: widget.eventRateable.event!.localization != null,
             child: Row(children: <Widget>[
               Icon(
                 Mdi.mapMarker,
@@ -140,14 +143,14 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
               ),
               Flexible(
                 child: Text(
-                  widget.event.event!.localization == null
+                  widget.eventRateable.event!.localization == null
                       ? 'Não informado'
-                      : widget.event.event!.localization!.street +
+                      : widget.eventRateable.event!.localization!.street +
                           ', Nº ' +
-                          widget.event.event!.localization!.number
+                          widget.eventRateable.event!.localization!.number
                               .toString() +
                           ' - ' +
-                          widget.event.event!.localization!
+                          widget.eventRateable.event!.localization!
                               .city, // NULLABLE ??
                   style: TextStyle(
                     color: CustomColors.colorOrangeSecondary,
@@ -168,7 +171,7 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
               ),
               Flexible(
                 child: Text(
-                  widget.event.event!.link, // NULLABLE ??
+                  widget.eventRateable.event!.link, // NULLABLE ??
                   style: TextStyle(
                     color: CustomColors.colorOrangeSecondary,
                     fontFamily: 'OpenSans',
@@ -190,7 +193,7 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
               width: 10.0,
             ),
             Text(
-              widget.event.event!.category,
+              widget.eventRateable.event!.category,
               style: TextStyle(
                 color: CustomColors.colorOrangeSecondary,
                 fontFamily: 'OpenSans',
@@ -201,6 +204,31 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
 
           const SizedBox(
             height: 16,
+          ),
+
+          Visibility(
+            visible: !widget.eventRateable.rated,
+            child: Center(
+              child: TextButton(
+                onPressed: () {},
+                child: Text('Avaliar'),
+              ),
+            ),
+            replacement: Center(
+              child: TextButton(
+                onPressed: () async {
+                   showDialog(context: context,
+                      builder: (BuildContext context){
+                        return SeeRatingDialog(
+                          // rate: rate,
+                          idEvento: widget.eventRateable.event!.id,
+                        );
+                      }
+                  );
+                },
+                child: Text('Ver avaliações'),
+              ),
+            ),
           ),
         ],
       ),

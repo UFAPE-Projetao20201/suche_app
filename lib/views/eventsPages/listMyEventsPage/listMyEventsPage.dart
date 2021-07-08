@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:mdi/mdi.dart';
-import 'package:suche_app/model/EventRateable.dart';
+import 'package:suche_app/model/event_rateable.dart';
 
 // Project imports:
 import 'package:suche_app/model/event.dart';
@@ -296,10 +296,11 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
                       itemCount: isSelected[1] == true && _switchTypeEventValue == false ? eventRateableList.length : eventList.length,
                       itemBuilder: (context, index) {
                         if(isSelected[1] == true && _switchTypeEventValue == false) {
+                          print(eventRateableList[index]);
                           return ListTile(
                             title: Column(
                               children: [
-                                EventTileRateableComponent(event: eventRateableList[index], user: widget.user),
+                                EventTileRateableComponent(eventRateable: eventRateableList[index], user: widget.user),
                                 Divider(
                                   color: CustomColors.colorOrangeSecondary,
                                 ),
