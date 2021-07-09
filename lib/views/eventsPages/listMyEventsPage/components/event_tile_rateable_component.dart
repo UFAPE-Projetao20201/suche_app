@@ -12,6 +12,7 @@ import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/rate_provider.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
+import 'package:suche_app/views/eventsPages/listMyEventsPage/components/rate_dialog.dart';
 import 'package:suche_app/views/eventsPages/listMyEventsPage/components/see_rating_dialog.dart';
 
 class EventTileRateableComponent extends StatefulWidget {
@@ -210,17 +211,24 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
             visible: !widget.eventRateable.rated,
             child: Center(
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(context: context,
+                      builder: (BuildContext context){
+                        return RateDialog(
+                          idEvento: widget.eventRateable.event!.id,
+                        );
+                      }
+                  );
+                },
                 child: Text('Avaliar'),
               ),
             ),
             replacement: Center(
               child: TextButton(
-                onPressed: () async {
+                onPressed: () {
                    showDialog(context: context,
                       builder: (BuildContext context){
                         return SeeRatingDialog(
-                          // rate: rate,
                           idEvento: widget.eventRateable.event!.id,
                         );
                       }

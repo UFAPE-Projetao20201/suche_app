@@ -179,6 +179,7 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Visibility(
         visible: !erro,
         replacement: Text('erro'),
