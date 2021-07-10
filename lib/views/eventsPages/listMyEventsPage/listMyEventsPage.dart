@@ -28,6 +28,8 @@ class ListMyEventsPage extends StatefulWidget {
 }
 
 class _ListMyEventsPageState extends State<ListMyEventsPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   bool erro = false;
   bool loading = false;
   var isSelected = [true, false]; //index 0 para promotor e index 1 para participante
@@ -115,7 +117,6 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
 
       setState(() {
         for (int i = 0; i < eventListResponse.length; i++) {
-          print(eventListResponse[i]);
           EventRateable event = EventRateable.fromJson(eventListResponse[i]);
           eventRateableList.add(event);
         }
@@ -180,6 +181,7 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      key: _scaffoldKey,
       body: Visibility(
         visible: !erro,
         replacement: Text('erro'),
@@ -297,7 +299,6 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
                       itemCount: isSelected[1] == true && _switchTypeEventValue == false ? eventRateableList.length : eventList.length,
                       itemBuilder: (context, index) {
                         if(isSelected[1] == true && _switchTypeEventValue == false) {
-                          print(eventRateableList[index]);
                           return ListTile(
                             title: Column(
                               children: [

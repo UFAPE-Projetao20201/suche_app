@@ -38,11 +38,17 @@ class RateProvider {
     }
   }
 
-  Future confirmPresence(String eventId, String email, String token) async {
+  Future sendRateEvent(String eventId, String userId, String token, double faithfulness, double quality, double security, String? description) async {
     try {
       final body = {
-        'email': email,
-        'eventID': eventId,
+        "rate": {
+          "user": userId,
+          "security": security,
+          "quality": quality,
+          "faithfulness": faithfulness,
+          "description": description,
+        },
+        "eventID": eventId,
       };
 
       Map headers = {
@@ -52,7 +58,7 @@ class RateProvider {
       };
 
       final httpResponse = await httpClient.request(
-        url: '/confirm',
+        url: '/rate',
         method: 'post',
         body: body,
         headers: headers,

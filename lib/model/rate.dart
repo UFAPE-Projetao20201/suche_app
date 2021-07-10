@@ -39,7 +39,7 @@ class Rate {
     }
     _mSecurity = json["mSecurity"].toDouble();
     _mQuality = json["mQuality"].toDouble();
-    _mFaithfulness = json["mFaithfulness"];
+    _mFaithfulness = json["mFaithfulness"].toDouble();
   }
 
   Map<String, dynamic> toJson() {

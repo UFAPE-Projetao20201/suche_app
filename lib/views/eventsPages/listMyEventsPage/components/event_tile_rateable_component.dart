@@ -213,9 +213,11 @@ class _EventTileRateableComponentState extends State<EventTileRateableComponent>
               child: TextButton(
                 onPressed: () {
                   showDialog(context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context){
                         return RateDialog(
                           idEvento: widget.eventRateable.event!.id,
+                          user: widget.user,
                         );
                       }
                   );
