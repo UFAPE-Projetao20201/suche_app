@@ -10,6 +10,8 @@ import 'package:mdi/mdi.dart';
 import 'package:suche_app/http/http_error.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/user_provider.dart';
+import 'package:suche_app/services/storage.dart';
+import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
 import 'package:suche_app/views/components/form_components.dart';
@@ -109,10 +111,23 @@ class BottomSheetComponents {
                                     token: _user.token,
                                   );
 
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
+                                  // Removendo usuário local
+                                  final SecureStorage secureStorage = SecureStorage();
+                                  await secureStorage.deleteSecureData('user');
 
-                                  Navigator.pop(context);
+                                  Future.delayed(const Duration(milliseconds: 500), () {
+                                    ScaffoldMessenger.of(context).clearSnackBars();
+
+                                    Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (Route<dynamic> route) => false);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Dados atualizados, faça seu login novamente.'),
+                                        duration: Duration(seconds: 4),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
+                                  });
+
                                 } catch (erro) {
                                   // TODO: Fix - Snackbars aparecendo ao fundo
                                   if (erro == HttpError.notFound) {
