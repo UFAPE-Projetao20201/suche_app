@@ -107,12 +107,14 @@ class _ListEventsPageState extends State<ListEventsPage> {
       }
       var eventListResponse = await _apiClient.listPresentialEvents(name, category, widget.user.email);
 
-      setState(() {
-        for (int i = 0; i < eventListResponse.length; i++) {
-          EventImIn event = EventImIn.fromJson(eventListResponse[i]);
-          eventList.add(event);
-        }
-      });
+      if (mounted) {
+        setState(() {
+          for (int i = 0; i < eventListResponse.length; i++) {
+            EventImIn event = EventImIn.fromJson(eventListResponse[i]);
+            eventList.add(event);
+          }
+        });
+      }
     } on Exception catch (e) {
       print('excecao -> ' + e.toString());
     }
@@ -134,14 +136,15 @@ class _ListEventsPageState extends State<ListEventsPage> {
       }
       var eventListResponse = await _apiClient.listOnlineEvents(name, category, widget.user.email);
 
-      setState(() {
-        for (int i = 0; i < eventListResponse.length; i++) {
-          EventImIn event = EventImIn.fromJson(eventListResponse[i]);
-          eventList.add(event);
-        }
-      });
 
-      log(eventListResponse.toString());
+      if (mounted) {
+        setState(() {
+          for (int i = 0; i < eventListResponse.length; i++) {
+            EventImIn event = EventImIn.fromJson(eventListResponse[i]);
+            eventList.add(event);
+          }
+        });
+      }
     } on Exception catch (e) {
       print('excecao -> ' + e.toString());
     }
