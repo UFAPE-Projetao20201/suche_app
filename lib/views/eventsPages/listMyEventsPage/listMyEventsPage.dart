@@ -7,11 +7,13 @@ import 'package:mdi/mdi.dart';
 
 // Project imports:
 import 'package:suche_app/model/event.dart';
+import 'package:suche_app/model/event_rateable.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/event_provider.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/eventsPages/listMyEventsPage/components/event_tile_comum_component.dart';
+import 'components/event_tile_rateable_component.dart';
 
 class ListMyEventsPage extends StatefulWidget {
   final User user;
@@ -23,12 +25,15 @@ class ListMyEventsPage extends StatefulWidget {
 }
 
 class _ListMyEventsPageState extends State<ListMyEventsPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   bool erro = false;
   bool loading = false;
   var isSelected = [true, false]; //index 0 para promotor e index 1 para participante
   bool imIn = false; //temporário enquanto não há requisção
   bool _switchTypeEventValue = true; // true é referente a eventos futuros
   List<Event> eventList = [];
+  List<EventRateable> eventRateableList = [];
 
   @override
   void initState() {
@@ -96,6 +101,7 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
   getPastEvents() async {
     setState(() {
       eventList = [];
+      eventRateableList = [];
     });
 
     final EventProvider _apiClient = EventProvider();
@@ -106,8 +112,8 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
 
       setState(() {
         for (int i = 0; i < eventListResponse.length; i++) {
-          Event event = Event.fromJson(eventListResponse[i]);
-          eventList.add(event);
+          EventRateable event = EventRateable.fromJson(eventListResponse[i]);
+          eventRateableList.add(event);
         }
       });
     }on Exception catch (e) {
@@ -169,6 +175,8 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      key: _scaffoldKey,
       body: Visibility(
         visible: !erro,
         replacement: Text('erro'),
@@ -265,7 +273,7 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
                   ),
                 ),
                 child:  Visibility(
-                  visible: eventList.isNotEmpty,
+                  visible: isSelected[1] == true && _switchTypeEventValue == false ? eventRateableList.isNotEmpty : eventList.isNotEmpty,
                   replacement: Flexible(
                     child: Center(
                       child: Text(
@@ -283,18 +291,32 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
                   ),
                   child: Expanded(
                     child:ListView.builder(
-                      itemCount: eventList.length,
+                      itemCount: isSelected[1] == true && _switchTypeEventValue == false ? eventRateableList.length : eventList.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Column(
-                            children: [
-                              EventTileComumComponent(event: eventList[index], user: widget.user),
-                              Divider(
-                                color: CustomColors.colorOrangeSecondary,
-                              ),
-                            ],
-                          ),
-                        );
+                        if(isSelected[1] == true && _switchTypeEventValue == false) {
+                          return ListTile(
+                            title: Column(
+                              children: [
+                                EventTileRateableComponent(eventRateable: eventRateableList[index], user: widget.user),
+                                Divider(
+                                  color: CustomColors.colorOrangeSecondary,
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return ListTile(
+                            title: Column(
+                              children: [
+                                EventTileComumComponent(event: eventList[index], user: widget.user),
+                                Divider(
+                                  color: CustomColors.colorOrangeSecondary,
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
                       },
                     ),
                   ),

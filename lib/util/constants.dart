@@ -11,6 +11,7 @@ const String registerUserRoute = '/registerUser';
 const String perfilRoute = '/perfil';
 const registerPromoterRoute = '/registerPromoter';
 const registerEventRoute = 'registerEvent';
+const myPastEventEventsRoute = '/myPastEvents';
 
 // Constantes para estilização
 final kHintTextStyle = TextStyle(

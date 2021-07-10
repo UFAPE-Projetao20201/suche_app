@@ -9,10 +9,10 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:mdi/mdi.dart';
-import 'package:suche_app/http/http_error.dart';
 import 'package:validators/validators.dart';
 
 // Project imports:
+import 'package:suche_app/http/http_error.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/user_provider.dart';
 import 'package:suche_app/services/storage.dart';

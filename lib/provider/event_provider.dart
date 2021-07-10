@@ -134,6 +134,7 @@ class EventProvider {
       throw error;
     }
   }
+
   Future listConfirmedEvents(String? email) async {
     try {
       final queryParameters = {
@@ -152,6 +153,7 @@ class EventProvider {
       throw error;
     }
   }
+
   Future listPastEvents(String? email) async {
     try {
       final queryParameters = {
