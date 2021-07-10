@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
-import 'package:suche_app/model/rate.dart';
+
+// Project imports:
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/rate_provider.dart';
 import 'package:suche_app/util/constants.dart';
@@ -38,35 +42,11 @@ class _RateDialogState extends State<RateDialog> {
     super.initState();
   }
 
-  Future<bool> _onWillPop() async {
-    return (await showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('Are you sure?'),
-        content: new Text('Do you want to exit an App'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: new Text('No'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: new Text('Yes'),
-          ),
-        ],
-      ),
-    )) ?? false;
-  }
-
   @override
   Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
     return WillPopScope(
       onWillPop: () async => rated ? false : true,
       child: Dialog(
-        /*shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(padding),
-        ),*/
         elevation: 0,
         backgroundColor: Colors.transparent,
         child: Container(
@@ -185,18 +165,6 @@ class _RateDialogState extends State<RateDialog> {
                           child: Text(rated ? 'Voltar para home' : 'Enviar avaliação'),
                         ),
                       ),
-                      /*const SizedBox(
-                        height: 16,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text('Fechar'),
-                        ),
-                      ),*/
                     ],
                   ),
                 );

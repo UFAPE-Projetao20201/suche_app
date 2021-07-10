@@ -1,15 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+
+// Project imports:
 import 'package:suche_app/model/rate.dart';
 import 'package:suche_app/provider/rate_provider.dart';
 
 class SeeRatingDialog extends StatefulWidget {
-/*final Rate rate;*/
   final String idEvento;
 
   const SeeRatingDialog({
     Key? key,
-    /*required this.rate*/
     required this.idEvento,
   }) : super(key: key);
 
@@ -91,7 +94,6 @@ class _SeeRatingDialogState extends State<SeeRatingDialog> {
                     height: 32,
                   ),
                   Text('Nota média para fidelidade:',style: TextStyle(fontSize: 16, color: Colors.black),textAlign: TextAlign.center,),
-                  // Flexible(child: Text('Nota média para fidelidade:',style: TextStyle(fontSize: 14, color: Colors.black),textAlign: TextAlign.center,)),
                   RatingStars(
                     value: rate.mFaithfulness!,
                     starSize: 30,

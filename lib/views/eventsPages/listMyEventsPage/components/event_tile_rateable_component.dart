@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:intl/intl.dart';
 import 'package:mdi/mdi.dart';
-import 'package:suche_app/model/event_rateable.dart';
-import 'package:suche_app/model/rate.dart';
 
 // Project imports:
+import 'package:suche_app/model/event_rateable.dart';
 import 'package:suche_app/model/user.dart';
-import 'package:suche_app/provider/rate_provider.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/util/util.dart';
 import 'package:suche_app/views/eventsPages/listMyEventsPage/components/rate_dialog.dart';

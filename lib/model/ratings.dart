@@ -1,12 +1,5 @@
+// Project imports:
 import 'package:suche_app/model/user.dart';
-
-/// description : ""
-/// _id : "60e3834f1492dd09e6aaa9c3"
-/// user : {"isPromoter":false,"confirmedEvents":["60d7b0564a5c03141b5d4af3"],"_id":"60e380611492dd09e6aaa9c0","email":"lf@api.com","name":"Diego","surname":"dos Santos","phone":"8753116716","gender":"masculino","birthDate":"1999-06-28T18:45:15.000Z","createdAt":"2021-07-05T21:57:53.208Z","__v":1}
-/// security : 3
-/// quality : 1
-/// faithfulness : 2
-/// __v : 0
 
 class Ratings {
   String? _description;

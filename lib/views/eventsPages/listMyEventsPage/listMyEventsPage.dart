@@ -1,21 +1,18 @@
 // Flutter imports:
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:mdi/mdi.dart';
-import 'package:suche_app/model/event_rateable.dart';
 
 // Project imports:
 import 'package:suche_app/model/event.dart';
+import 'package:suche_app/model/event_rateable.dart';
 import 'package:suche_app/model/user.dart';
 import 'package:suche_app/provider/event_provider.dart';
 import 'package:suche_app/util/constants.dart';
 import 'package:suche_app/util/custom_colors.dart';
 import 'package:suche_app/views/eventsPages/listMyEventsPage/components/event_tile_comum_component.dart';
-
 import 'components/event_tile_rateable_component.dart';
 
 class ListMyEventsPage extends StatefulWidget {
@@ -112,8 +109,6 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
     try {
 
       var eventListResponse = await _apiClient.listPastEvents(widget.user.email);
-
-      // log(eventListResponse.toString());
 
       setState(() {
         for (int i = 0; i < eventListResponse.length; i++) {

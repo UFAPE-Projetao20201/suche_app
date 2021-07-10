@@ -4,7 +4,6 @@ class Localization {
   final String CEP;
   final int number;
 
-
   Localization({required this.street, required this.city, required this.CEP, required this.number});
 
   factory Localization.fromJson(Map<String, dynamic> json) {
