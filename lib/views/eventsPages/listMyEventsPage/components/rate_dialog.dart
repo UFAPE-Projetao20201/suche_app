@@ -76,10 +76,21 @@ class _RateDialogState extends State<RateDialog> {
             child: FutureBuilder(
               builder: (context, snapshot){
                 return SingleChildScrollView(
-                  // padding: mediaQuery.viewInsets,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
+                      Visibility(
+                        visible: !rated,
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: TextButton(
+                            onPressed: (){
+                              Navigator.pop(context);
+                            },
+                            child: Text('X'),
+                          ),
+                        ),
+                      ),
                       Align(child: Text('Insira a sua avaliação para este evento:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700, color: Colors.black), textAlign: TextAlign.center,),),
                       const SizedBox(
                         height: 24,

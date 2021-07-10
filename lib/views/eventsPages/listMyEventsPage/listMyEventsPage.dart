@@ -192,6 +192,7 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
               Visibility(
                 visible: widget.user.isPromoter, //Negar esse teste
                 child: ToggleButtons(
+                  borderRadius: BorderRadius.circular(32.0),
                   children: <Widget>[
                     Text("Promotor",
                       style: TextStyle(
