@@ -132,12 +132,14 @@ class _ListMyEventsPageState extends State<ListMyEventsPage> {
 
       var eventListResponse = await _apiClient.listFutureEventsPromoter(widget.user.email);
 
-      setState(() {
-        for (int i = 0; i < eventListResponse.length; i++) {
-          Event event = Event.fromJson(eventListResponse[i]);
-          eventList.add(event);
-        }
-      });
+      if(mounted) {
+        setState(() {
+          for (int i = 0; i < eventListResponse.length; i++) {
+            Event event = Event.fromJson(eventListResponse[i]);
+            eventList.add(event);
+          }
+        });
+      }
     }on Exception catch (e) {
       print('excecao -> ' + e.toString());
     }
