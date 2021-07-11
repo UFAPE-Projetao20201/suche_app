@@ -89,7 +89,7 @@ class _SeeRatingDialogState extends State<SeeRatingDialog> {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text('Média de ${rate.ratings!.length.toString()} avaliações',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700, color: Colors.black),),
+                  Text(rate.ratings!.length > 1 ? 'Média de ${rate.ratings!.length.toString()} avaliações' : 'Média de ${rate.ratings!.length.toString()} avaliação',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700, color: Colors.black),),
                   const SizedBox(
                     height: 32,
                   ),

@@ -90,40 +90,121 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
       appBar: AppBar(
         title: Text("Cadastro de Evento"),
       ),
-      body: AbsorbPointer(
-        absorbing: _absorbing,
-        child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Stack(
-              children: <Widget>[
-                PageComponents.buildBackgroundContainer(),
-                Container(
-                  color: CustomColors.orangePrimary.shade400,
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Stepper(
-                    currentStep: _indexStepper,
-                    onStepCancel: () {
-                      if (_indexStepper > 0) {
-                        setState(() {
-                          _indexStepper -= 1;
-                        });
-                      }
-                    },
-                    onStepContinue: () async {
-                      //Botão continuar do Step de informação do evento
-                      if (_indexStepper <= 0) {
-                        if(_formKey1.currentState!.validate() && _dropdownValueType == 'Presencial'){
+      body: Theme(
+        data: ThemeData(
+            colorScheme: ColorScheme.light(
+                primary: CustomColors.colorLightGray,
+              onPrimary: CustomColors.colorOrangeSecondary,
+            )
+        ),
+        child: AbsorbPointer(
+          absorbing: _absorbing,
+          child: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle.light,
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Stack(
+                children: <Widget>[
+                  PageComponents.buildBackgroundContainer(),
+                  Container(
+                    color: CustomColors.orangePrimary.shade400,
+                    height: double.infinity,
+                    width: double.infinity,
+                    child: Stepper(
+
+                      currentStep: _indexStepper,
+                      onStepCancel: () {
+                        if (_indexStepper > 0) {
                           setState(() {
-                            _indexStepper += 1;
+                            _indexStepper -= 1;
                           });
-                        //Cadastrando evento online
-                        }else if (_formKey1.currentState!.validate()){
+                        }
+                      },
+                      onStepContinue: () async {
+                        //Botão continuar do Step de informação do evento
+                        if (_indexStepper <= 0) {
+                          if(_formKey1.currentState!.validate() && _dropdownValueType == 'Presencial'){
+                            setState(() {
+                              _indexStepper += 1;
+                            });
+                          //Cadastrando evento online
+                          }else if (_formKey1.currentState!.validate()){
+                              setState(() {
+                                //Desabilitando o toque da tela
+                                //_absorbing = true;
+                              });
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Processando dados...'),
+                                ),
+                              );
+
+                              final EventProvider _apiClient = new EventProvider();
+
+                              // Variável booleana para evento online/presencial
+                              if (_dropdownValueType == 'Presencial'){
+                                _isOnline = false;
+                              }else if (_dropdownValueType == 'Online'){
+                                _isOnline = true;
+                              }
+
+                              await _apiClient.createEventOnline(
+                                token: widget.user.token,
+                                promoter: widget.user.getId(),
+                                name: _nameController.text,
+                                description: _descriptionController.text,
+                                category: _dropdownValueCategory.toString(),
+                                value: double.parse(_priceController.text.substring(3,_priceController.text.length).replaceAll(",",".")),
+                                date: _dateTime.toString(),
+                                keywords: _keywordsController.text.split(","), //Refatorar futuramente tratando de uma forma mais robusta
+                                link: _linkController.text,
+                                isOnline: _isOnline,
+                                isLocal: !_isOnline,
+                              ).then((value) => showDialog(context: context, builder: (ctx) => AlertDialog(
+                                title: Text('Parabéns!', style: TextStyle(
+                                  color: CustomColors.orangePrimary.shade400,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.w900,
+                                ),),
+                                content: Text('Evento criado com sucesso!', style: TextStyle(
+                                  color: CustomColors.orangePrimary.shade400,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w900,
+                                ),),
+                                backgroundColor: CustomColors.colorLightGray,
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      homeRoute,
+                                          (route) => false,
+                                      arguments: widget.user,
+                                    ),
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              )) );
+
+                              // Re-habilita a tela para receber toques
+                              setState(() {
+                                _absorbing = false;
+                              });
+
+                              ScaffoldMessenger.of(context)
+                                  .clearSnackBars();
+                          }
+
+                        //Botão continuar do Step de localização do evento
+                        }else if (_indexStepper == 1) {
+                          setState(() {
+                          });
+                          if(_formKey2.currentState!.validate()){
                             setState(() {
                               //Desabilitando o toque da tela
-                              //_absorbing = true;
+                              _absorbing = true;
                             });
 
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -141,7 +222,7 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
                               _isOnline = true;
                             }
 
-                            await _apiClient.createEventOnline(
+                            await _apiClient.createEvent(
                               token: widget.user.token,
                               promoter: widget.user.getId(),
                               name: _nameController.text,
@@ -150,6 +231,11 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
                               value: double.parse(_priceController.text.substring(3,_priceController.text.length).replaceAll(",",".")),
                               date: _dateTime.toString(),
                               keywords: _keywordsController.text.split(","), //Refatorar futuramente tratando de uma forma mais robusta
+                              localization: {
+                                "street": _streetController.text,
+                                "city": _cityController.text,
+                                "CEP": Util.sanitizeCEP(_cepController.text),
+                                "number": _numberController.text},
                               link: _linkController.text,
                               isOnline: _isOnline,
                               isLocal: !_isOnline,
@@ -187,191 +273,114 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
 
                             ScaffoldMessenger.of(context)
                                 .clearSnackBars();
-                        }
 
-                      //Botão continuar do Step de localização do evento
-                      }else if (_indexStepper == 1) {
-                        setState(() {
-                        });
-                        if(_formKey2.currentState!.validate()){
-                          setState(() {
-                            //Desabilitando o toque da tela
-                            _absorbing = true;
-                          });
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Processando dados...'),
-                            ),
-                          );
-
-                          final EventProvider _apiClient = new EventProvider();
-
-                          // Variável booleana para evento online/presencial
-                          if (_dropdownValueType == 'Presencial'){
-                            _isOnline = false;
-                          }else if (_dropdownValueType == 'Online'){
-                            _isOnline = true;
                           }
-
-                          await _apiClient.createEvent(
-                            token: widget.user.token,
-                            promoter: widget.user.getId(),
-                            name: _nameController.text,
-                            description: _descriptionController.text,
-                            category: _dropdownValueCategory.toString(),
-                            value: double.parse(_priceController.text.substring(3,_priceController.text.length).replaceAll(",",".")),
-                            date: _dateTime.toString(),
-                            keywords: _keywordsController.text.split(","), //Refatorar futuramente tratando de uma forma mais robusta
-                            localization: {
-                              "street": _streetController.text,
-                              "city": _cityController.text,
-                              "CEP": Util.sanitizeCEP(_cepController.text),
-                              "number": _numberController.text},
-                            link: _linkController.text,
-                            isOnline: _isOnline,
-                            isLocal: !_isOnline,
-                          ).then((value) => showDialog(context: context, builder: (ctx) => AlertDialog(
-                            title: Text('Parabéns!', style: TextStyle(
-                              color: CustomColors.orangePrimary.shade400,
-                              fontFamily: 'OpenSans',
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.w900,
-                            ),),
-                            content: Text('Evento criado com sucesso!', style: TextStyle(
-                              color: CustomColors.orangePrimary.shade400,
-                              fontFamily: 'OpenSans',
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w900,
-                            ),),
-                            backgroundColor: CustomColors.colorLightGray,
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  homeRoute,
-                                      (route) => false,
-                                  arguments: widget.user,
-                                ),
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          )) );
-
-                          // Re-habilita a tela para receber toques
-                          setState(() {
-                            _absorbing = false;
-                          });
-
-                          ScaffoldMessenger.of(context)
-                              .clearSnackBars();
-
                         }
-                      }
-                    },
-                    onStepTapped: (int index) {
-                      setState(() {
-                        _indexStepper = index;
-                      });
-                    },
-                    physics: BouncingScrollPhysics(),
-                    steps: <Step>[
-                      Step(
-                        title: const Text(
-                          'Informações do Evento',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
+                      },
+                      onStepTapped: (int index) {
+                        setState(() {
+                          _indexStepper = index;
+                        });
+                      },
+                      physics: BouncingScrollPhysics(),
+                      steps: <Step>[
+                        Step(
+                          title: const Text(
+                            'Informações do Evento',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          content: EventDescriptionStep.buildEventDescriptionStep(
+                            _formKey1,
+                            _nameController,
+                            _descriptionController,
+                            _categoryController,
+                            _dropdownValueCategory,
+                            _onChangedDropdownCategory,
+                            categoryList,
+                            _keywordsController,
+                            _dateController,
+                            _dateTime,
+                            () {
+                              showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(3000),
+                              ).then(
+                                (date) {
+                                  setState(
+                                    () {
+                                      if (date != null) {
+                                        _dateTime = date;
+                                        _dateController.text =
+                                            UtilData.obterDataDDMMAAAA(date);
+                                      } else {
+                                        _dateTime = null;
+                                        _dateController.clear();
+                                      }
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            _timeController,
+                            () {
+                              showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay(hour: 00, minute: 00),
+                              ).then(
+                                    (time) {
+                                  setState(
+                                        () {
+                                      if (time != null && _dateTime != null) {
+                                        _dateTime =  DateTime(_dateTime!.year, _dateTime!.month, _dateTime!.day, time!.hour, time!.minute);
+                                        _timeController.text = UtilData.obterHoraHHMM(_dateTime!);
+                                      } else {
+                                        //Não muda se não selecionar data antes
+                                        _dateTime = null;
+                                        time = null;
+                                        _timeController.clear();
+                                      }
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            _priceController,
+                            _linkController,
+                            _typeController,
+                            _dropdownValueType,
+                            _onChangedDropdownType,
+                            typeEventList,
                           ),
                         ),
-                        content: EventDescriptionStep.buildEventDescriptionStep(
-                          _formKey1,
-                          _nameController,
-                          _descriptionController,
-                          _categoryController,
-                          _dropdownValueCategory,
-                          _onChangedDropdownCategory,
-                          categoryList,
-                          _keywordsController,
-                          _dateController,
-                          _dateTime,
-                          () {
-                            showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(3000),
-                            ).then(
-                              (date) {
-                                setState(
-                                  () {
-                                    if (date != null) {
-                                      _dateTime = date;
-                                      _dateController.text =
-                                          UtilData.obterDataDDMMAAAA(date);
-                                    } else {
-                                      _dateTime = null;
-                                      _dateController.clear();
-                                    }
-                                  },
-                                );
-                              },
-                            );
-                          },
-                          _timeController,
-                          () {
-                            showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay(hour: 00, minute: 00),
-                            ).then(
-                                  (time) {
-                                setState(
-                                      () {
-                                    if (time != null && _dateTime != null) {
-                                      _dateTime =  DateTime(_dateTime!.year, _dateTime!.month, _dateTime!.day, time!.hour, time!.minute);
-                                      _timeController.text = UtilData.obterHoraHHMM(_dateTime!);
-                                    } else {
-                                      //Não muda se não selecionar data antes
-                                      _dateTime = null;
-                                      time = null;
-                                      _timeController.clear();
-                                    }
-                                  },
-                                );
-                              },
-                            );
-                          },
-                          _priceController,
-                          _linkController,
-                          _typeController,
-                          _dropdownValueType,
-                          _onChangedDropdownType,
-                          typeEventList,
-                        ),
-                      ),
-                      Step(
-                        title: Text(
-                          'Local do Evento',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
+                        Step(
+                          title: Text(
+                            'Local do Evento',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          content: EventLocationStep.buildEventDescriptionStep(
+                              _formKey2,
+                              _streetController,
+                              _numberController,
+                              _cityController,
+                              _cepController),
                         ),
-                        content: EventLocationStep.buildEventDescriptionStep(
-                            _formKey2,
-                            _streetController,
-                            _numberController,
-                            _cityController,
-                            _cepController),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
