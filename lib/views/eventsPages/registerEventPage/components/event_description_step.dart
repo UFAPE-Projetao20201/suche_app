@@ -26,6 +26,8 @@ class EventDescriptionStep{
       TextEditingController _dateController,
       DateTime? _dateTime,
       Function() _onTapDateFunction,
+      TextEditingController _timeController,
+      Function() _onTapTimeFunction,
       TextEditingController _priceController,
       TextEditingController _linkController,
       TextEditingController _typeController,
@@ -184,6 +186,27 @@ class EventDescriptionStep{
                         : UtilData.obterDataDDMMAAAA(_dateTime!),
                     readOnly: true,
                     onTap: _onTapDateFunction,
+                  ),
+                  SizedBox(height: 10.0),
+
+                  // Data do Evento
+                  FormComponents.buildCustomTextForm(
+                    'Hora do evento',
+                    _timeController,
+                    TextInputType.datetime,
+                        (value) {
+                      if (_timeController.text.isEmpty) {
+                        return 'A hora é um campo obrigatório';
+                      } else {
+                        return null;
+                      }
+                    },
+                    Mdi.clockOutline,
+                    _timeController.text.isEmpty
+                        ? 'Insira a hora do evento'
+                        : UtilData.obterHoraHHMM(_dateTime!),
+                    readOnly: true,
+                    onTap: _onTapTimeFunction,
                   ),
                   SizedBox(height: 10.0),
 

@@ -37,6 +37,7 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
   TextEditingController _categoryController = TextEditingController();
   TextEditingController _keywordsController = TextEditingController(); //Criar função para tratar o texto recebido e gerar uma array de palavras?
   TextEditingController _dateController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
   TextEditingController _linkController = TextEditingController();
   TextEditingController _typeController = TextEditingController();
@@ -313,6 +314,29 @@ class _RegisterEventPageState extends State<RegisterEventPage> {
                                     } else {
                                       _dateTime = null;
                                       _dateController.clear();
+                                    }
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          _timeController,
+                          () {
+                            showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay(hour: 00, minute: 00),
+                            ).then(
+                                  (time) {
+                                setState(
+                                      () {
+                                    if (time != null && _dateTime != null) {
+                                      _dateTime =  DateTime(_dateTime!.year, _dateTime!.month, _dateTime!.day, time!.hour, time!.minute);
+                                      _timeController.text = UtilData.obterHoraHHMM(_dateTime!);
+                                    } else {
+                                      //Não muda se não selecionar data antes
+                                      _dateTime = null;
+                                      time = null;
+                                      _timeController.clear();
                                     }
                                   },
                                 );

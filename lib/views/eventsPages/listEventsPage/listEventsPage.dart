@@ -84,9 +84,11 @@ class _ListEventsPageState extends State<ListEventsPage> {
       await getOnlineEvent(_nameController.text, _dropdownValueCategory);
     }
 
-    setState(() {
-      loading = false;
-    });
+    if (mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   getPresentialEvent(String? name, String? category) async {
