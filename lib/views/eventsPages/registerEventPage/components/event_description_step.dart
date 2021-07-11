@@ -239,7 +239,7 @@ class EventDescriptionStep{
                     _linkController,
                     TextInputType.url,
                         (value) {
-                      if (!isURL(value)) {
+                      if (!isURL(value) && _dropdownValueType == "Online") {
                         return 'Insira um link válido';
                       } else {
                         return null;
