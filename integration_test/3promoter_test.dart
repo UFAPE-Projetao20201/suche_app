@@ -24,11 +24,11 @@ void main() {
     await tester.enterText(find.byType(TextField), "95634125677");
     await tester.pump(new Duration(seconds: 1));
     await tester.tap(find.text('ATUALIZAR'));
-    await tester.pump(new Duration(seconds: 5));
+    await tester.pump(new Duration(seconds: 1));
     await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Mdi.compass));
     await tester.pump(new Duration(seconds: 2));
-    expect(find.text('SucheApp'), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(find.text('Dados atualizados, faça seu login novamente.'), findsOneWidget);
 
   });
 }

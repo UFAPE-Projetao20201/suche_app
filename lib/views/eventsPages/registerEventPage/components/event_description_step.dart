@@ -41,7 +41,6 @@ class EventDescriptionStep{
     return Container(
       color: CustomColors.orangePrimary.shade400,
       child: SingleChildScrollView(
-        key:Key('ScrollCadastroEvento'),
         physics: AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.symmetric(
           horizontal: 10.0,

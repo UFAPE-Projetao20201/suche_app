@@ -233,6 +233,7 @@ class _EventTileComponentState extends State<EventTileComponent> {
                         visible: !_absorbing,
                         replacement: Container(child: CircularProgressIndicator(strokeWidth: 2,), width: 22, height: 22, margin: EdgeInsets.all(13),),
                         child: Checkbox(
+                          key:Key("listaeventos"),
                           value: widget.eventImIn.imIn,
                           onChanged: (value) async {
                             if (!value!) {
