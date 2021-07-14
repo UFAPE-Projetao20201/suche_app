@@ -241,6 +241,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
                                    _categoryController,
                                    Center(
                                      child: DropdownButtonFormField<String>(
+                                       key:Key("homecategoria"),
                                        value: _dropdownValueCategory,
                                        icon: const Icon(
                                          Icons.arrow_downward,
@@ -294,6 +295,7 @@ class _ListEventsPageState extends State<ListEventsPage> {
 
                                //Botão Switch
                                FlutterSwitch(
+                                 key: Key("switch"),
                                  width: 150.0,
                                  height: 45.0,
                                  toggleSize: 45.0,

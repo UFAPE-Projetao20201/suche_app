@@ -10,7 +10,7 @@ void main() {
     await tester.pumpWidget(MyApp(user: '',));
     expect(find.text('Suche'), findsOneWidget);
     Finder email = find.byType(TextField).at(0);
-    await tester.enterText(email, 'teste@api.com');
+    await tester.enterText(email, 'integration@teste.com');
     Finder senha = find.byType(TextField).at(1);
     await tester.enterText(senha, '12345678');
     await tester.tap(find.text('ENTRAR'));
@@ -51,7 +51,7 @@ void main() {
     await tester.pumpWidget(MyApp(user: '',));
     expect(find.text('Suche'), findsOneWidget);
     Finder email = find.byType(TextField).at(0);
-    await tester.enterText(email, 'teste@api.com');
+    await tester.enterText(email, 'integration@teste.com');
     Finder senha = find.byType(TextField).at(1);
     await tester.enterText(senha, '123456789');
     await tester.tap(find.text('ENTRAR'));

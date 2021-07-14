@@ -49,16 +49,22 @@ void main() {
     await tester.tap(find.text('Ok'));
     await tester.pumpAndSettle();
 
-    Finder preco = find.byType(TextField).at(4);
+    Finder hora = find.byType(TextField).at(4);
+    await tester.tap(hora);
+    await tester.pump();
+    await tester.pump(new Duration(seconds: 2));
+    await tester.tap(find.text('Ok').last);
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('CONTINUAR'));
+    await tester.pumpAndSettle();
+
+    Finder preco = find.byType(TextField).at(5);
     await tester.enterText(preco, '200');
     await tester.pump(new Duration(seconds: 1));
 
-    Finder link = find.byType(TextField).at(5);
+    Finder link = find.byType(TextField).at(6);
     await tester.enterText(link, 'teste.com');
-
-    await tester.drag(find.byKey(Key('ScrollCadastroEvento')), const Offset(0.0, -300));
-    await tester.pump();
-    await tester.pump(new Duration(seconds: 2));
 
     Finder tipoevento = find.byKey(Key("tipoevento"));
     await tester.tap(tipoevento);
@@ -68,7 +74,7 @@ void main() {
     await tester.pump();
     await tester.pump(Duration(seconds: 4));
 
-    await tester.tap(find.text('CONTINUAR'));
+    await tester.tap(find.text('CONTINUAR').first);
     await tester.pump(new Duration(seconds: 5));
     await tester.pumpAndSettle();
 
@@ -117,16 +123,22 @@ void main() {
     await tester.tap(find.text('Ok'));
     await tester.pumpAndSettle();
 
-    Finder preco = find.byType(TextField).at(4);
+    Finder hora = find.byType(TextField).at(4);
+    await tester.tap(hora);
+    await tester.pump();
+    await tester.pump(new Duration(seconds: 2));
+    await tester.tap(find.text('Ok').last);
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('CONTINUAR'));
+    await tester.pumpAndSettle();
+
+    Finder preco = find.byType(TextField).at(5);
     await tester.enterText(preco, '0');
     await tester.pump(new Duration(seconds: 1));
 
-    Finder link = find.byType(TextField).at(5);
+    Finder link = find.byType(TextField).at(6);
     await tester.enterText(link, 'testepresencial.com');
-
-    await tester.drag(find.byKey(Key('ScrollCadastroEvento')), const Offset(0.0, -300));
-    await tester.pump();
-    await tester.pump(new Duration(seconds: 2));
 
     Finder tipoevento = find.byKey(Key("tipoevento"));
     await tester.tap(tipoevento);
@@ -136,22 +148,212 @@ void main() {
     await tester.pump();
     await tester.pump(Duration(seconds: 4));
 
-    await tester.tap(find.text('CONTINUAR'));
+    await tester.tap(find.text('CONTINUAR').first);
     await tester.pump(new Duration(seconds: 5));
     await tester.pumpAndSettle();
 
-    Finder rua = find.byType(TextField).at(6);
+    Finder rua = find.byType(TextField).at(7);
     await tester.enterText(rua, 'Rua Central');
-    Finder numero = find.byType(TextField).at(7);
+    Finder numero = find.byType(TextField).at(8);
     await tester.enterText(numero, '217');
-    Finder cidade = find.byType(TextField).at(8);
+    Finder cidade = find.byType(TextField).at(9);
     await tester.enterText(cidade, 'Recife');
-    Finder CEP = find.byType(TextField).at(9);
+    Finder CEP = find.byType(TextField).at(10);
     await tester.enterText(CEP, '43326781');
 
     await tester.tap(find.text('CONTINUAR').last);
     await tester.pump(new Duration(seconds: 5));
     await tester.pumpAndSettle();
     expect(find.text('Evento criado com sucesso!'), findsOneWidget);
+  });
+
+  testWidgets("Vizualizar eventos presenciais cadastrados", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    expect(find.text('Não há eventos cadastrados'), findsNothing);
+  });
+
+  testWidgets("Não vizualizar nenhum evento presencial", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    Finder buscanome = find.byType(TextField).at(0);
+    //Para simular o funcionamento de não ter nenhum evento no sistema
+    //Utilizarei a busca por nome pois possui o mesmo tratamento
+    //Então buscarei por um nome que 'muito provavelmente' não existe no sistema
+    await tester.enterText(buscanome, 'NenhumEventoComEsseNome');
+    await tester.pump(new Duration(seconds: 4));
+    expect(find.text('Não há eventos cadastrados'), findsOneWidget);
+  });
+
+  testWidgets("Vizualizar eventos cadastrados", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(Key("switch")));
+    await tester.pump(new Duration(seconds: 1));
+    await tester.pumpAndSettle();
+    expect(find.text('Não há eventos cadastrados'), findsNothing);
+  });
+
+  testWidgets("Não vizualizar nenhum evento", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(Key("switch")));
+    await tester.pump(new Duration(seconds: 1));
+    await tester.pumpAndSettle();
+    Finder buscanome = find.byType(TextField).at(0);
+    //Para simular o funcionamento de não ter nenhum evento no sistema
+    //Utilizarei a busca por nome pois possui o mesmo tratamento
+    //Então buscarei por um nome que 'muito provavelmente' não existe no sistema
+    await tester.enterText(buscanome, 'NenhumEventoComEsseNome');
+    await tester.pump(new Duration(seconds: 4));
+    expect(find.text('Não há eventos cadastrados'), findsOneWidget);
+  });
+
+  testWidgets("Buscar evento presencial por categoria", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    Finder buscacategoria = find.byKey(Key("homecategoria"));
+    await tester.tap(buscacategoria);
+    await tester.pump();
+    await tester.pump(Duration(seconds: 1));
+    await tester.tap(find.text('Filme').last);
+    await tester.pump();
+    await tester.pump(Duration(seconds: 4));
+    expect(find.text('Outro Evento de Teste'), findsOneWidget);
+  });
+
+  testWidgets("Buscar evento virtual por categoria", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(Key("switch")));
+    await tester.pump(new Duration(seconds: 1));
+    await tester.pumpAndSettle();
+    Finder buscacategoria = find.byKey(Key("homecategoria"));
+    await tester.tap(buscacategoria);
+    await tester.pump();
+    await tester.pump(Duration(seconds: 1));
+    await tester.tap(find.text('Artes').last);
+    await tester.pump();
+    await tester.pump(Duration(seconds: 4));
+    expect(find.text('Evento de Teste'), findsOneWidget);
+  });
+
+  testWidgets("Marcar presença em um evento presencial", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    await tester.pump(new Duration(seconds: 2));
+    await tester.tap(find.byKey(Key("listaeventos")).first);
+    await tester.pump(new Duration(seconds: 2));
+    await tester.pumpAndSettle();
+    expect(find.text('SucheApp'), findsOneWidget);
+  });
+
+  testWidgets("Marcar presença em um evento online", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(Key("switch")));
+    await tester.pump(new Duration(seconds: 1));
+    await tester.pumpAndSettle();
+    await tester.pump(new Duration(seconds: 2));
+    await tester.tap(find.byKey(Key("listaeventos")).first);
+    await tester.pump(new Duration(seconds: 2));
+    await tester.pumpAndSettle();
+    expect(find.text('SucheApp'), findsOneWidget);
+  });
+
+  testWidgets("Eventos que eu confirmei presença como participante", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    expect(find.text('SucheApp'), findsOneWidget);
+    await tester.tap(find.byIcon(Mdi.partyPopper));
+    await tester.pump(new Duration(seconds: 2));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text("Participante"));
+    await tester.pump(new Duration(seconds: 2));
+    await tester.pumpAndSettle();
+    await tester.pump(new Duration(seconds: 2));
+    expect(find.text('Acceptance Tester'), findsWidgets);
+  });
+
+  testWidgets("Eventos que eu cadastrei como promotor", (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp(user: '',));
+    expect(find.text('Suche'), findsOneWidget);
+    Finder email = find.byType(TextField).at(0);
+    await tester.enterText(email, 'integration@teste.com');
+    Finder senha = find.byType(TextField).at(1);
+    await tester.enterText(senha, '12345678');
+    await tester.tap(find.text('ENTRAR'));
+    await tester.pump(new Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    expect(find.text('SucheApp'), findsOneWidget);
+    await tester.tap(find.byIcon(Mdi.partyPopper));
+    await tester.pump(new Duration(seconds: 2));
+    await tester.pumpAndSettle();
+    await tester.pump(new Duration(seconds: 2));
+    expect(find.text('Evento de Teste'), findsOneWidget);
+    expect(find.text('Outro Evento de Teste'), findsOneWidget);
   });
 }
